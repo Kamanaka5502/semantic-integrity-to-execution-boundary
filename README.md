@@ -1,58 +1,117 @@
-# Veritas Execution Gate — Demo
+# Semantic Integrity to Execution Boundary
 
-> A thin layer that decides if an action is allowed to become real — before it executes.
+> Semantic integrity preserves meaning. This layer determines whether that meaning is allowed to bind into action.
 
-## What this shows
+## Core Idea
 
-Given:
-- a proposed action
-- current system state
-- authority + policy conditions
+Modern systems fail in two different places:
 
-The system decides:
+### Gate 1 — Semantic Gate
+Is the input meaningful, complete, and trustworthy enough to reason from?
 
-- EXECUTE -> if admissible
-- REDIRECT -> if a safer valid path exists
-- ESCALATE -> if human input is required
-- REFUSE -> if no lawful path exists
+### Gate 2 — Execution Gate
+Even if the meaning is correct, is execution still admissible under current state, authority, policy, and risk?
+
+This repository demonstrates why both gates are required.
+
+A system can preserve meaning and still fail operationally if it executes under the wrong conditions.
+
+---
 
 ## Why this matters
 
-Most systems log decisions after execution.
+Semantic integrity is necessary, but not sufficient.
 
-This enforces:
+A system may still produce inadmissible action because:
 
-no execution unless conditions are valid at commit.
+- state changed after interpretation
+- authority is no longer valid
+- policy or corridor constraints shifted
+- risk exceeds threshold
+- runtime conditions are no longer satisfied
 
-## Where this fits
+That means the full chain has to be:
 
-This can sit in front of any system that produces actions:
+**meaning -> admissibility -> execution**
 
-- AI agents proposing actions
-- workflow automation tools
-- API-triggered operations
-- internal decision engines
+Without semantic integrity, systems reason from ambiguity.  
+Without execution gating, systems act when they should not.
 
-Instead of trusting the output, every action passes through a gate:
+---
 
-- validate current state
-- validate authority
-- validate constraints
-- decide if execution is allowed
+## What this demo shows
 
-This makes execution fail-closed instead of fail-open.
+Given:
+- a proposed action
+- semantic context quality
+- current system state
+- authority conditions
+
+the system decides, before execution:
+
+- EXECUTE
+- REDIRECT
+- ESCALATE
+- REFUSE
+
+---
+
+## Gate Model
+
+### Semantic Gate
+Checks whether the proposal is based on usable meaning.
+
+Examples:
+- context complete enough
+- data not ambiguous
+- relevant records present
+- interpretation confidence acceptable
+
+### Execution Gate
+Checks whether the proposed action is still allowed to become real.
+
+Examples:
+- authority valid
+- state valid
+- risk within threshold
+- execution readiness satisfied
+
+---
+
+## Why teams focused on semantic integrity still need this layer
+
+Semantic integrity answers:
+
+**"Is the system reasoning from correct meaning?"**
+
+Execution gating answers:
+
+**"Even if the meaning is correct, is execution still valid now?"**
+
+This does not compete with semantic integrity.  
+It completes it.
+
+---
 
 ## Demo Flow
 
-Input -> Evaluation -> Decision -> Receipt -> Replay
+Input -> Semantic Gate -> Execution Gate -> Decision -> Receipt
 
 Same input -> same result
 
-## Example
+---
+
+## Example Logic
 
 ### Input
 
-action = "DEPLOY_CHANGE"
+action = "APPROVE_PRODUCTION_DEPLOYMENT"
+
+semantic = {
+    "context_complete": True,
+    "ambiguity_low": True,
+    "confidence": 0.91
+}
 
 state = {
     "risk": 8,
@@ -63,30 +122,25 @@ authority = {
     "valid": True
 }
 
-### Evaluation
-
-def evaluate(action, state, authority):
-    if not authority["valid"]:
-        return "REFUSE"
-
-    if state["risk"] > 7:
-        return "ESCALATE"
-
-    if not state["ready"]:
-        return "REDIRECT"
-
-    return "EXECUTE"
-
 ### Output
 
 {
   "decision": "ESCALATE",
-  "reason": "Risk threshold exceeded",
-  "timestamp": "2026-04-20T12:00:00Z"
+  "reason": "Execution risk threshold exceeded",
+  "timestamp": "2026-04-20T12:00:00+00:00"
 }
 
-## Key Point
+---
+
+## Core Claim
+
+This is not a logging layer.  
+This is not post-hoc review.
+
+This is a two-gate enforcement model.
 
 The system does not execute because it has a proposal.
 
-It executes only if the proposal is valid at the moment of commit.
+It executes only if:
+1. the proposal is semantically trustworthy enough to reason from
+2. the proposal remains admissible at commit
