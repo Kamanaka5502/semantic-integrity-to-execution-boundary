@@ -1,9 +1,0 @@
-{
-  "action": "APPROVE_PRODUCTION_DEPLOYMENT",
-  "semantic_gate": "PASS",
-  "execution_gate": "ESCALATE",
-  "decision": "ESCALATE",
-  "reason": "Execution risk threshold exceeded",
-  "state_hash": "4f66ce538680f41ede3d7d7e18f92cfa09c1940157079df3c4161507357952b6",
-  "timestamp": "2026-04-20T19:39:52.473241+00:00"
-}
