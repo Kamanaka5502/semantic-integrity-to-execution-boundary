@@ -63,3 +63,6 @@ receipt = {
 }
 
 print(json.dumps(receipt, indent=2))
+
+from save_receipt import save_receipt
+save_receipt(receipt)
