@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, UTC
 
 def evaluate(action, state, authority):
     if not authority["valid"]:
@@ -20,5 +20,5 @@ decision = evaluate(action, state, authority)
 
 print({
     "decision": decision,
-    "timestamp": datetime.utcnow().isoformat()
+    "timestamp": datetime.now(UTC).isoformat()
 })
