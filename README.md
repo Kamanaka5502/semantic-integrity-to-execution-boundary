@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Veritas Aegis — Execution Boundary Demo
 
 **Authors:** Samantha Revita, Terry Snyder  
@@ -194,3 +195,62 @@ Veritas Aegis closes that gap.
 This repository includes a runnable proof demonstrating lawful commit, replay stability, and mutation-visible refusal at the execution boundary.
 
 The full runtime includes additional receipt integrity, lineage, and invariant enforcement layers.
+=======
+# Veritas Aegis v21.1
+
+Deterministic execution-boundary artifact and receipt engine.
+
+## Install
+```bash
+pip install -e .
+```
+
+## Run tests
+```bash
+python -m pytest -q
+```
+
+## Run the proof
+```bash
+python run_proof.py
+```
+
+This produces:
+- one frozen basis
+- one frozen state
+- one signed artifact
+- one commit result
+- one replay check
+- one negative replay check with a single-field mutation
+
+## Package layout
+- `veritas_aegis/engine.py` — evaluation and commit engine
+- `veritas_aegis/contracts.py` — dataclasses and contract builders
+- `veritas_aegis/storage.py` — append-only JSON storage
+- `veritas_aegis/receipts.py` — lawful-context proof helpers
+- `run_proof.py` — one-command deterministic proof runner
+
+## Status
+The package passes its shipped test suite and includes a runnable proof path.
+
+
+## Stress determinism
+```bash
+python run_proof.py --stress 25
+```
+
+This runs the same locked corridor repeatedly and confirms:
+- one stable judgment-against-boundary hash
+- one stable cross-binding hash
+- one stable outcome
+- positive replay always matches
+
+Note: receipt identity may vary per run if receipt IDs are generated per commit. The stress gate measures stable judgment binding, not accidental UUID reuse.
+
+## Machine-readable report
+```bash
+python run_proof.py --output proof_output.json --quiet
+```
+
+This writes a structured proof report for automation and release checks.
+>>>>>>> b875dc8 (Integrate Terry full runtime build into execution boundary repo)

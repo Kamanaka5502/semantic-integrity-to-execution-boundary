@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "veritas-aegis"
+version = "0.21.1"
+description = "Deterministic execution-boundary artifact and receipt engine"
+readme = "README.md"
+requires-python = ">=3.10"
+authors = [{ name = "OpenAI User Build" }]
+
+[tool.setuptools]
+packages = ["veritas_aegis"]
