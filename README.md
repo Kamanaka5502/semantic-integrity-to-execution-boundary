@@ -1,4 +1,5 @@
 # Veritas Aegis — Semantic Integrity → Execution Boundary
+**A deterministic execution-boundary system that governs what is allowed to become real.**
 
 **Authors:** Samantha Revita, Terry Snyder  
 **Organization:** Veritas Aegis  
