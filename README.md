@@ -28,23 +28,8 @@ A full decision pass through:
   "semantic_gate": "PASS",
   "execution_gate": "ESCALATE",
   "decision": "ESCALATE",
-  "reason": "Execution risk threshold exceeded",
-  "state_hash": "...",
-  "timestamp": "..."
+  "reason": "Execution risk threshold exceeded"
 }
-
----
-
-## What this demonstrates
-
-This is not a simulation.
-
-This is a working execution boundary that:
-
-- blocks unsafe execution
-- enforces authority
-- evaluates against live state
-- produces verifiable receipts
 
 ---
 
