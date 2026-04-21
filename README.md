@@ -1,10 +1,11 @@
 
-# Veritas Aegis — Execution Boundary Demo
+# Veritas Aegis — Execution Boundary System
 
 **Authors:** Samantha Revita, Terry Snyder  
 **Organization:** Veritas Aegis  
 
 ---
+
 ## ⚖️ Execution Boundary System
 
 Veritas Aegis is an execution-boundary system.
@@ -17,6 +18,36 @@ It includes a concrete **SDC → Veritas handoff example**, but it is **not** a 
 the point where proposed actions are evaluated before they are allowed to become real.**
 ## Semantic Integrity → Execution Boundary
 
+## 🔁 Operational Flow
+
+Veritas Aegis evaluates whether a proposed state transition is allowed to become real.
+
+**Execution Flow**
+
+SDC Payload → Boundary Gate → Veritas Judgment → State Mutation
+
+- **SDC Payload**: Structured, schema-valid intent entering the system  
+- **Boundary Gate**: Commit boundary where admissibility is enforced  
+- **Veritas Judgment**: Deterministic evaluation against invariants and state  
+- **State Mutation**: Only occurs if the transition is proven admissible  
+
+This is not post-execution validation.  
+This is **pre-execution enforcement at the commit boundary**.
+
+## 🧩 System Insight
+
+Traditional schema validation (e.g., XSD) ensures structure,  
+but does not enforce **runtime admissibility**.
+
+This is the execution boundary.
+
+Nothing becomes real unless it proves admissibility.
+
+Veritas Aegis closes that gap:
+
+It consumes validated payloads and determines whether they have  
+**lawful standing to execute under current state and invariants**.
+
 Most systems today fail in a predictable way:
 
 They preserve *structure*  
@@ -27,7 +58,18 @@ But they do **not control whether that meaning is allowed to become real**
 
 ## The Problem
 
+Modern systems fail because execution is not governed.
+
+This is not a semantic failure alone.
+It is a failure of execution control.
+
+But they do not enforce whether a proposed action is allowed to become real.
+
 Modern AI + data systems break in two critical places:
+
+This is not a semantic problem alone.
+
+It is a failure of execution control.
 
 ### 1. Semantic Failure
 - Context is incomplete  
