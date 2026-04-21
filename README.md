@@ -1,11 +1,20 @@
-<<<<<<< HEAD
+
 # Veritas Aegis — Execution Boundary Demo
 
 **Authors:** Samantha Revita, Terry Snyder  
 **Organization:** Veritas Aegis  
 
 ---
+## ⚖️ Execution Boundary System
 
+Veritas Aegis is an execution-boundary system.
+
+This repository is its **public system expression**.
+
+It includes a concrete **SDC → Veritas handoff example**, but it is **not** a demo, wrapper, or mock layer.
+
+**This repository *is* the execution-boundary system surface —  
+the point where proposed actions are evaluated before they are allowed to become real.**
 ## Semantic Integrity → Execution Boundary
 
 Most systems today fail in a predictable way:
