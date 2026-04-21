@@ -1,13 +1,21 @@
-# Veritas Aegis — Execution Boundary Demo
+# Veritas Aegis — Semantic Integrity → Execution Boundary (Tim Demo)
 
 **Authors:** Samantha Revita, Terry Snyder  
 **Organization:** Veritas Aegis  
 
 ---
 
-## 🚀 Quick Start (30 seconds)
+## 🎯 Purpose
 
-Clone and run:
+You solve **semantic integrity**.
+
+This demo shows the **missing layer immediately after that**:
+
+> Even when meaning is correct, execution must still prove admissibility before it is allowed to become real.
+
+---
+
+## ⚡ Quick Run (30 seconds)
 
 git clone https://github.com/Kamanaka5502/semantic-integrity-to-execution-boundary.git
 cd semantic-integrity-to-execution-boundary
@@ -15,159 +23,111 @@ python example_run.py
 
 ---
 
-## 🧠 Core Idea
+## 🧠 The Gap
 
-Modern systems fail in two places:
+Modern systems:
 
-1. **Meaning is unclear or ambiguous**  
-2. **Execution happens without validation at commit**
+✔ preserve meaning  
+✔ structure data  
+✔ reduce ambiguity  
 
-Most systems try to fix the first.
+But still:
 
-**Veritas Aegis enforces the second.**
+❌ execute without validating real-world admissibility  
 
 ---
 
 ## 🔐 The Two-Gate Model
 
-Every action must pass through **two independent gates** before it is allowed to become real.
+### Gate 1 — Semantic Gate (your layer)
+
+Validates:
+- context completeness  
+- ambiguity  
+- confidence  
+
+Outcome:
+- PASS → proceed  
+- ESCALATE / REDIRECT / REFUSE  
 
 ---
 
-### Gate 1 — Semantic Gate
+### Gate 2 — Execution Gate (our layer)
 
-**Purpose:**  
-Validate that the proposed action is meaningful, complete, and trustworthy.
+Validates at **commit time**:
 
-**Checks:**
-- Context completeness  
-- Ambiguity level  
-- Confidence threshold  
+- authority  
+- live state  
+- risk  
+- readiness  
 
-**Possible outcomes:**
-- PASS → move to execution gate  
-- REDIRECT → request missing context  
-- ESCALATE → ambiguity or uncertainty  
-- REFUSE → invalid or unsafe meaning  
-
----
-
-### Gate 2 — Execution Gate
-
-**Purpose:**  
-Determine whether execution is admissible under **live system conditions at the moment of commit**.
-
-**Checks:**
-- Authority validity  
-- Risk thresholds  
-- System readiness  
-- Policy constraints  
-
-**Possible outcomes:**
-- EXECUTE → allowed to become real  
-- REDIRECT → valid path exists but not current state  
-- ESCALATE → human or higher authority required  
-- REFUSE → no lawful execution path  
+Outcome:
+- EXECUTE  
+- REDIRECT  
+- ESCALATE  
+- REFUSE  
 
 ---
 
-## ⚡ Critical Principle
+## ⚡ Key Difference
 
-**Veritas does not evaluate a static proposal.**
+**Semantic correctness ≠ execution safety**
 
-It evaluates whether execution is valid **under continuously changing state at the moment of commit**.
+This layer enforces:
 
----
-
-## 🔄 Full Flow
-
-Trigger → Context → Proposed Action  
-→ **Semantic Gate**  
-→ **Execution Gate (commit boundary)**  
-→ Decision  
-→ Execution (if allowed)  
-→ Receipt (proof)  
-→ Feedback into system state  
+> Execution is not allowed by default — it must prove admissibility at commit.
 
 ---
 
-## 📊 What You Will See
+## 🔄 Flow
 
-Running the demo produces a full decision pass:
-
-- Semantic gate evaluation  
-- Execution gate evaluation  
-- Final decision at commit boundary  
-- Structured receipt output  
-- Deterministic result  
+TMU (semantic system) proposes action  
+→ Semantic Gate validates meaning  
+→ Veritas evaluates **live execution conditions**  
+→ Decision is enforced at commit boundary  
+→ Receipt is generated  
 
 ---
 
 ## 📄 Example Output
 
 {
-  "action": "APPROVE_PRODUCTION_DEPLOYMENT",
   "semantic_gate": "PASS",
   "execution_gate": "ESCALATE",
   "decision": "ESCALATE",
-  "reason": "Execution risk threshold exceeded",
-  "state_hash": "...",
-  "timestamp": "..."
+  "reason": "Execution risk threshold exceeded"
 }
 
 ---
 
-## 🧾 Receipt Layer
+## 🧾 What This Adds
 
-Every decision produces a **receipt**:
-
-- Decision  
-- Reason  
-- State hash  
-- Timestamp  
-- Commit boundary validation  
-
-This enables:
-- auditability  
-- replay verification  
-- deterministic outcomes  
+- deterministic execution control  
+- explicit refusal conditions  
+- escalation handling  
+- receipt-based proof of decisions  
 
 ---
 
-## 🧭 Where This Fits
+## 🧭 Integration Model
 
-This layer sits directly between:
+Your system:
+→ produces high-integrity semantic output  
 
-- AI systems (LLMs, agents, decision engines)  
-- and real-world execution (APIs, workflows, systems)
-
----
-
-## 🛡️ What It Enforces
-
-→ no execution without admissibility  
-→ no assumption of authority  
-→ no silent risk acceptance  
+Veritas:
+→ determines if that output is allowed to execute in reality  
 
 ---
 
-## 🔥 Final Position
+## 🔥 Bottom Line
 
-This is not a wrapper.  
-This is not observability.  
-This is not post-hoc governance.  
+If semantic integrity guarantees meaning…  
 
-This is **execution control at the boundary of reality**.
+but execution is not governed…  
+
+the system remains exposed at the point where decisions become real.
 
 ---
 
-## 🎯 Bottom Line
-
-If your system guarantees meaning…  
-
-but does not control execution…  
-
-**you are still exposed.**
-
-Veritas Aegis closes that gap.
+**Veritas Aegis = execution admissibility at commit boundary**
 
