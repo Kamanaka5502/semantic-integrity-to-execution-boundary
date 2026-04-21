@@ -24,7 +24,7 @@ That gap is where risk actually lives.
 
 ## The Two-Gate Model
 
-### Gate 1 — Semantic Gate (upstream layer)
+### Gate 1 — Semantic Gate (upstream, external)
 
 **Validates:**
 - context completeness  
@@ -35,9 +35,9 @@ That gap is where risk actually lives.
 - PASS → proceed  
 - REDIRECT → adjust input  
 - ESCALATE → require higher judgment  
-- REFUSE → block invalid meaning  
+- REFUSE → block invalid meaning
 
-### Gate 2 — Execution Gate (Veritas Aegis)
+### Gate 2 — Execution Gate (Veritas Aegis — enforcement layer)
 
 Validates at **commit time**:
 - authority (who is allowed)  
