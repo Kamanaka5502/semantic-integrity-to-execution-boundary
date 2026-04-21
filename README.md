@@ -1,21 +1,23 @@
 # Veritas Aegis — Semantic Integrity → Execution Boundary
 
-**Authors:** Samantha Revita, Terry Snyder  
-**Organization:** Veritas Aegis  
+Authors: Samantha Revita, Terry Snyder  
+Organization: Veritas Aegis  
 
 ---
 
-## 🎯 Purpose
+## Purpose
 
-You solve **semantic integrity**.
+You solve semantic integrity.
 
-This demo shows the **missing layer immediately after that**:
+This demo shows the layer immediately after that:
 
-> Even when meaning is correct, execution must still prove admissibility before it is allowed to become real.
+Even when meaning is correct, execution must still prove admissibility before it is allowed to become real.
 
 ---
 
-## ⚡ Quick Run (30 seconds)
+## Quick Run (30 seconds)
+
+Clone and run:
 
 git clone https://github.com/Kamanaka5502/semantic-integrity-to-execution-boundary.git
 cd semantic-integrity-to-execution-boundary
@@ -23,7 +25,7 @@ python example_run.py
 
 ---
 
-## 🧠 The Gap
+## The Gap
 
 Modern systems:
 
@@ -33,13 +35,13 @@ Modern systems:
 
 But still:
 
-❌ execute without validating real-world admissibility  
+✘ execute without validating real-world admissibility  
 
 ---
 
-## 🔐 The Two-Gate Model
+## The Two-Gate Model
 
-### Gate 1 — Semantic Gate (your layer)
+Gate 1 — Semantic Gate (your layer)
 
 Validates:
 - context completeness  
@@ -52,9 +54,9 @@ Outcome:
 
 ---
 
-### Gate 2 — Execution Gate (our layer)
+Gate 2 — Execution Gate (our layer)
 
-Validates at **commit time**:
+Validates at commit time:
 
 - authority  
 - live state  
@@ -69,27 +71,25 @@ Outcome:
 
 ---
 
-## ⚡ Key Difference
+## Critical Principle
 
-**Semantic correctness ≠ execution safety**
+Semantic correctness ≠ execution safety
 
-This layer enforces:
-
-> Execution is not allowed by default — it must prove admissibility at commit.
+Execution is not allowed by default — it must prove admissibility at commit.
 
 ---
 
-## 🔄 Flow
+## Flow
 
-TMU (semantic system) proposes action  
+TMU proposes action  
 → Semantic Gate validates meaning  
-→ Veritas evaluates **live execution conditions**  
-→ Decision is enforced at commit boundary  
-→ Receipt is generated  
+→ Veritas evaluates live execution conditions  
+→ Decision enforced at commit boundary  
+→ Receipt generated  
 
 ---
 
-## 📄 Example Output
+## Example Output
 
 {
   "semantic_gate": "PASS",
@@ -100,7 +100,7 @@ TMU (semantic system) proposes action
 
 ---
 
-## 🧾 What This Adds
+## What This Adds
 
 - deterministic execution control  
 - explicit refusal conditions  
@@ -109,25 +109,23 @@ TMU (semantic system) proposes action
 
 ---
 
-## 🧭 Integration Model
+## Integration Model
 
-Your system:
-→ produces high-integrity semantic output  
+TMU (your system):
+produces high-integrity semantic output  
 
-Veritas:
-→ determines if that output is allowed to execute in reality  
-
----
-
-## 🔥 Bottom Line
-
-If semantic integrity guarantees meaning…  
-
-but execution is not governed…  
-
-the system remains exposed at the point where decisions become real.
+Veritas Aegis:
+determines if that output is allowed to execute in reality  
 
 ---
 
-**Veritas Aegis = execution admissibility at commit boundary**
+## Bottom Line
+
+If semantic integrity guarantees meaning  
+
+but execution is not governed  
+
+the system remains exposed at the point where decisions become real  
+
+Veritas Aegis = execution admissibility at commit boundary
 
