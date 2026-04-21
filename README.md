@@ -1,4 +1,4 @@
-# Veritas Aegis — Semantic Integrity → Execution Boundary (Tim Demo)
+# Veritas Aegis — Semantic Integrity → Execution Boundary
 
 **Authors:** Samantha Revita, Terry Snyder  
 **Organization:** Veritas Aegis  
