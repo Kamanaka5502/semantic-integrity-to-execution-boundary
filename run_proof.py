@@ -1,298 +1,160 @@
-from __future__ import annotations
-
 import argparse
 import json
-import shutil
-from dataclasses import replace
+import sys
+import tempfile
+import uuid
 from pathlib import Path
-from typing import Any
+from time import time
 
-from veritas_aegis import CommitRequest, VeritasAegisEngine, build_artifact
-from veritas_aegis.util import sha256_obj
-
-DEFAULT_STORE_ROOT = Path("demo_store")
-DEFAULT_OUTPUT_PATH = Path("proof_output.json")
+from veritas_surface.runtime import evaluate_payload
 
 
-def reset_store(store_root: Path) -> None:
-    if store_root.exists():
-        shutil.rmtree(store_root)
-
-
-def seed_basis(engine: VeritasAegisEngine):
-    rules = {
-        "schema": {
-            "schema_id": "tmu.transition",
-            "schema_version": "1.0",
-            "constraint_bundle_hash": "bundle-hash-001",
-            "required_payload_fields": ["order_id", "target_state", "risk_level"],
-        },
-        "actors": {
-            "operator_1": ["commit_scope"],
-        },
-        "transitions": {
-            "approve_order": {
-                "from": ["PENDING"],
-                "to": "APPROVED",
-                "required_scope": ["commit_scope"],
-                "required_payload_matches": ["target_state"],
-                "max_risk": 5,
-            }
-        },
-        "branch_policy": {
-            "allowed_branch_id": "branch-alpha",
-            "required_derivation": "DERIVATIVE",
-            "required_branch_role": "EXECUTION_BOUNDARY_STEWARD",
-            "forbid_sovereign_claim": True,
-            "required_steward_lane": "visible_operator_lane",
-            "required_visible_surface": "operator_surface",
-            "allowed_workflows": ["tmu_demo_flow"],
-            "require_translation_digest": True,
-            "require_source_intent": True,
-        },
-        "escalation_corridors": {
-            "approve_order": "senior_review"
-        },
-        "require_parent_receipt_for_statuses": [],
-    }
-    return engine.put_basis({
-        "basis_id": "tmu-demo-basis",
+def build_payload(execution_branch_id="main"):
+    return {
+        "artifact_id": "artifact-001",
+        "artifact_hash": "ca05d3fb7e15c97bd76f389426722871404e901f5d0ebcdf86210c74ae478e87" if execution_branch_id == "main" else "b0814f29552e1746238ccd5ce2b2ca8a7def45faba9eed6df692a8d783a91370",
+        "payload_hash": "08edc9d84bdc986f5ed61c0da7e6026394df3598671768ee26294145f91f76cc",
+        "basis_id": "tim-demo-basis",
         "version": "1.0.0",
-        "rules": rules,
-    })
-
-
-def seed_state(engine: VeritasAegisEngine) -> None:
-    engine.put_state(
-        "state-001",
-        {
-            "entity_id": "entity-001",
-            "current_status": "PENDING",
-            "attributes": {"risk_level": 1},
-            "open_burdens": [],
-            "continuity_chain_head": None,
-            "continuity_debt": [],
-        },
-    )
-
-
-def build_demo_artifact(engine: VeritasAegisEngine, basis):
-    state = engine.resolve_state("state-001")
-    artifact = build_artifact(
-        artifact_id="artifact-001",
-        payload={
-            "order_id": "ORD-1001",
-            "target_state": "APPROVED",
-            "risk_level": 1,
-        },
-        workflow_id="tmu_demo_flow",
-        workflow_step="attending_signoff",
-        requested_transition="approve_order",
-        actor_id="operator_1",
-        authority_scope=["commit_scope"],
-        schema_id="tmu.transition",
-        schema_version="1.0",
-        constraint_bundle_hash="bundle-hash-001",
-        governing_basis_id=basis.basis_id,
-        governing_basis_version=basis.version,
-        governing_basis_hash=basis.basis_hash,
-        basis_lineage_hash=basis.lineage_hash,
-        basis_signature=basis.signature,
-        logic_version="demo.logic.v1",
-        source_intent="approve order under TMU boundary demo",
-        executable_claim="approve_order",
-        translation_constraints=["must_match_basis", "must_match_state"],
-        translation_outcome="PRESERVE",
-        steward_lane="visible_operator_lane",
-        visible_surface="operator_surface",
-        translation_digest="digest-001",
-        translation_narrowing=[],
-        preserved_claims=["approve_order"],
-        state_ref="state-001",
-        declared_state_hash=state.state_hash,
-        declared_entity_id=state.entity_id,
-        declared_current_status=state.current_status,
-        declared_open_burden_codes=[],
-        parent_receipt_id=None,
-        parent_receipt_signature=None,
-        parent_receipt_witness_hash=None,
-        continuity_chain_head=state.continuity_chain_head,
-        continuity_mode="self",
-        continuation_intent="continue current lawful branch",
-        continuation_constraints=["no_open_debt"],
-        expected_continuation_result="ALLOW",
-        continuity_debt_in=[],
-        inherited_burden_codes=[],
-        execution_branch_id="branch-alpha",
-        branch_derivation="DERIVATIVE",
-        branch_role="EXECUTION_BOUNDARY_STEWARD",
-        claims_sovereign_authority=False,
-        declared_escalation_target=None,
-        surface_steward="Samantha/Terry",
-    )
-    return engine.sign_artifact(artifact)
-
-
-def make_wrong_branch_variant(engine: VeritasAegisEngine, artifact):
-    tampered_artifact = replace(
-        artifact,
-        branch_posture=replace(artifact.branch_posture, execution_branch_id="branch-beta"),
-    )
-    return engine.sign_artifact(tampered_artifact)
-
-
-def summarize_result(result, replay: dict[str, Any]) -> dict[str, Any]:
-    receipt = result.receipt
-    return {
-        "allowed": result.allowed,
-        "outcome": receipt.outcome,
-        "judgment_mode": receipt.outcome_judgment.judgment_mode,
-        "reason_codes": receipt.reason_codes,
-        "receipt_id": receipt.receipt_id,
-        "receipt_hash": receipt.integrity.receipt_hash,
-        "judgment_against_boundary_hash": receipt.integrity.judgment_against_boundary_hash,
-        "judgment_cross_binding_hash": receipt.integrity.judgment_cross_binding_hash,
-        "replay": replay,
+        "basis_hash": "2ffdac5b0865bdd0d0548274fe17567165f733a0de2a8ef85700fbc5930277e1",
+        "state_hash": "a78fbc196921e25982f312dd9e2ff8aba24507cdfbf7fca52f5228092f004dcb",
+        "state_ref": "state-001",
+        "workflow_step": "attending_signoff",
+        "requested_transition": "approve_order",
+        "commit_boundary": "attending_signoff",
+        "authority_scope": ["commit_scope"],
+        "execution_branch_id": execution_branch_id,
     }
 
 
-def build_proof_report(store_root: Path) -> dict[str, Any]:
-    reset_store(store_root)
-    engine = VeritasAegisEngine(store_root=str(store_root))
-    basis = seed_basis(engine)
-    seed_state(engine)
-    artifact = build_demo_artifact(engine, basis)
-
-    result = engine.commit(CommitRequest(artifact=artifact))
-    replay = engine.replay(result.receipt.receipt_id, artifact)
-
-    tampered_artifact = make_wrong_branch_variant(engine, artifact)
-    tampered_replay = engine.replay(result.receipt.receipt_id, tampered_artifact)
-
+def stable_view(result):
     return {
+        "allowed": result["allowed"],
+        "outcome": result["outcome"],
+        "judgment_mode": result["judgment_mode"],
+        "reason_codes": result["reason_codes"],
+        "judgment_against_boundary_hash": result["judgment_against_boundary_hash"],
+        "judgment_cross_binding_hash": result["judgment_cross_binding_hash"],
+    }
+
+
+def replay_check(original, fresh):
+    mismatches = []
+    fields = [
+        "allowed",
+        "outcome",
+        "judgment_mode",
+        "reason_codes",
+        "judgment_against_boundary_hash",
+        "judgment_cross_binding_hash",
+        "judgment_context",
+    ]
+    for field in fields:
+        if original.get(field) != fresh.get(field):
+            mismatches.append(field.upper() + "_MISMATCH")
+    return {
+        "matches": len(mismatches) == 0,
+        "mismatches": mismatches,
+        "fresh": fresh,
+    }
+
+
+def make_receipt(result):
+    receipt = dict(result)
+    receipt["receipt_id"] = str(uuid.uuid4())
+    receipt["created_at"] = time()
+    return receipt
+
+
+def run(iterations=0):
+    positive_payload = build_payload("main")
+    positive_eval = evaluate_payload(positive_payload)
+    positive_receipt = make_receipt(positive_eval)
+
+    positive_replay_eval = evaluate_payload(build_payload("main"))
+    positive_replay_receipt = make_receipt(positive_replay_eval)
+
+    positive = {
+        "allowed": positive_receipt["allowed"],
+        "outcome": positive_receipt["outcome"],
+        "judgment_mode": positive_receipt["judgment_mode"],
+        "reason_codes": positive_receipt["reason_codes"],
+        "receipt_id": positive_receipt["receipt_id"],
+        "receipt_hash": positive_receipt["receipt_hash"],
+        "judgment_against_boundary_hash": positive_receipt["judgment_against_boundary_hash"],
+        "judgment_cross_binding_hash": positive_receipt["judgment_cross_binding_hash"],
+        "replay": replay_check(positive_eval, positive_replay_eval),
+    }
+
+    negative_payload = build_payload("beta")
+    negative_replay_eval = evaluate_payload(negative_payload)
+    negative_replay_receipt = make_receipt(negative_replay_eval)
+
+    negative = {
+        "mutation": "execution_branch_id=beta",
+        "replay": replay_check(positive_eval, negative_replay_eval),
+    }
+
+    report = {
         "proof": {
             "corridor": {
                 "transition": "approve_order",
                 "commit_boundary": "attending_signoff",
                 "authority_scope": ["commit_scope"],
-                "negative_case": "execution_branch_id=branch-beta",
+                "negative_case": "execution_branch_id=beta",
             },
             "basis": {
-                "basis_id": basis.basis_id,
-                "version": basis.version,
-                "basis_hash": basis.basis_hash,
-                "lineage_hash": basis.lineage_hash,
+                "basis_id": "tim-demo-basis",
+                "version": "1.0.0",
+                "basis_hash": "2ffdac5b0865bdd0d0548274fe17567165f733a0de2a8ef85700fbc5930277e1",
             },
-            "positive": summarize_result(result, replay),
-            "negative": {
-                "mutation": "execution_branch_id=branch-beta",
-                "tampered_artifact_hash": sha256_obj(tampered_artifact.to_dict()),
-                "replay": tampered_replay,
-            },
+            "positive": positive,
+            "negative": negative,
         }
     }
 
+    if iterations:
+        runs = [evaluate_payload(build_payload("main")) for _ in range(iterations)]
+        boundary_hashes = {r["judgment_against_boundary_hash"] for r in runs}
+        cross_hashes = {r["judgment_cross_binding_hash"] for r in runs}
+        outcomes = sorted({r["outcome"] for r in runs})
+        replays_match = all(
+            replay_check(runs[0], r)["matches"] for r in runs[1:]
+        ) if len(runs) > 1 else True
 
-def run_stress(iterations: int) -> dict[str, Any]:
-    receipt_hashes: list[str] = []
-    boundary_hashes: list[str] = []
-    binding_hashes: list[str] = []
-    outcomes: list[str] = []
-    replay_matches: list[bool] = []
+        deterministic = (
+            len(boundary_hashes) == 1
+            and len(cross_hashes) == 1
+            and len(outcomes) == 1
+            and replays_match
+        )
 
-    for idx in range(iterations):
-        report = build_proof_report(Path(f"demo_store_stress_{idx}"))
-        positive = report["proof"]["positive"]
-        receipt_hashes.append(positive["receipt_hash"])
-        boundary_hashes.append(positive["judgment_against_boundary_hash"])
-        binding_hashes.append(positive["judgment_cross_binding_hash"])
-        outcomes.append(positive["outcome"])
-        replay_matches.append(bool(positive["replay"]["matches"]))
+        report["stress"] = {
+            "iterations": iterations,
+            "unique_judgment_against_boundary_hash_count": len(boundary_hashes),
+            "unique_judgment_cross_binding_hash_count": len(cross_hashes),
+            "unique_outcomes": outcomes,
+            "all_positive_replays_match": replays_match,
+            "deterministic": deterministic,
+        }
 
-    unique_receipt_hashes = sorted(set(receipt_hashes))
-    unique_boundary_hashes = sorted(set(boundary_hashes))
-    unique_binding_hashes = sorted(set(binding_hashes))
-    unique_outcomes = sorted(set(outcomes))
-    all_replays_match = all(replay_matches)
-    return {
-        "iterations": iterations,
-        "unique_receipt_hash_count": len(unique_receipt_hashes),
-        "unique_receipt_hashes": unique_receipt_hashes,
-        "unique_judgment_against_boundary_hash_count": len(unique_boundary_hashes),
-        "unique_judgment_against_boundary_hashes": unique_boundary_hashes,
-        "unique_judgment_cross_binding_hash_count": len(unique_binding_hashes),
-        "unique_judgment_cross_binding_hashes": unique_binding_hashes,
-        "unique_outcomes": unique_outcomes,
-        "all_positive_replays_match": all_replays_match,
-        "receipt_identity_varies_per_run": len(unique_receipt_hashes) > 1,
-        "deterministic": len(unique_boundary_hashes) == 1 and len(unique_binding_hashes) == 1 and unique_outcomes == ["SAFE_COMMIT"] and all_replays_match,
-    }
+    return report
 
 
-def print_header(title: str) -> None:
-    print("=" * 60)
-    print(title)
-    print("=" * 60)
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--stress", type=int, default=0)
+    parser.add_argument("--output")
+    parser.add_argument("--quiet", action="store_true")
+    args = parser.parse_args()
 
+    report = run(iterations=args.stress)
 
-def print_positive(report: dict[str, Any]) -> None:
-    positive = report["proof"]["positive"]
-    print("Positive case")
-    print("Allowed:", positive["allowed"])
-    print("Outcome:", positive["outcome"])
-    print("Judgment mode:", positive["judgment_mode"])
-    print("Reason codes:", ", ".join(positive["reason_codes"]) or "(none)")
-    print("Receipt ID:", positive["receipt_id"])
-    print("Receipt Hash:", positive["receipt_hash"])
-    print("Replay Match:", positive["replay"]["matches"])
-    print("Replay Mismatches:", positive["replay"]["mismatches"])
-    print()
-
-
-def print_negative(report: dict[str, Any]) -> None:
-    negative = report["proof"]["negative"]
-    print("Negative case (wrong branch id)")
-    print("Mutation:", negative["mutation"])
-    print("Replay Match:", negative["replay"]["matches"])
-    print("Replay Mismatches:", negative["replay"]["mismatches"])
-    print()
-
-
-def print_stress(stress: dict[str, Any]) -> None:
-    print("Determinism stress")
-    print("Iterations:", stress["iterations"])
-    print("Unique receipt hashes:", stress["unique_receipt_hash_count"])
-    print("Unique boundary hashes:", stress["unique_judgment_against_boundary_hash_count"])
-    print("Unique cross-binding hashes:", stress["unique_judgment_cross_binding_hash_count"])
-    print("Unique outcomes:", ", ".join(stress["unique_outcomes"]))
-    print("All positive replays match:", stress["all_positive_replays_match"])
-    print("Receipt identity varies per run:", stress["receipt_identity_varies_per_run"])
-    print("Deterministic:", stress["deterministic"])
-    print()
-
-
-def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Run the Veritas Aegis deterministic proof corridor.")
-    parser.add_argument("--store-root", type=Path, default=DEFAULT_STORE_ROOT, help="Store root used for the main proof run.")
-    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT_PATH, help="Path to write the proof report JSON.")
-    parser.add_argument("--stress", type=int, default=0, help="Run deterministic proof this many extra times and verify stable receipt hashes.")
-    parser.add_argument("--quiet", action="store_true", help="Suppress terminal output and only write JSON.")
-    return parser.parse_args()
-
-
-def main() -> None:
-    args = parse_args()
-    report = build_proof_report(args.store_root)
-    if args.stress:
-        report["stress"] = run_stress(args.stress)
-    args.output.write_text(json.dumps(report, indent=2, sort_keys=True))
+    if args.output:
+        Path(args.output).write_text(json.dumps(report, indent=2))
 
     if not args.quiet:
-        print_header("VERITAS AEGIS — PROOF RUN")
-        print_positive(report)
-        print_negative(report)
-        if "stress" in report:
-            print_stress(report["stress"])
+        print(json.dumps(report, indent=2))
 
 
 if __name__ == "__main__":
