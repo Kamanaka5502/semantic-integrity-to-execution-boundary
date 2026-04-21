@@ -1,201 +1,196 @@
-# Veritas Aegis — Semantic Integrity to Execution Boundary
+# Veritas Aegis — Execution Boundary Demo
 
-A deterministic execution-boundary proof surface showing how a semantically valid instruction reaches the final gate before state change.
-
-## Core Idea
-
-SDC checks the instruction.  
-Veritas decides whether it is allowed to become real.
+**Authors:** Samantha Revita, Terry Snyder  
+**Organization:** Veritas Aegis  
 
 ---
 
-## Execution Flow (End-to-End)
+## Semantic Integrity → Execution Boundary
 
-## Upstream System
-*(LLM / Rules Engine / API / Workflow)*
+Most systems today fail in a predictable way:
 
-↓
-
-## Semantic Validation Layer (SDC)
-- **structure**
-- **completeness**
-- **correctness**
-
-↓
-
-## Veritas Aegis — Execution Boundary
-- **authority validation**
-- **live state alignment**
-- **constraint enforcement**
-- **branch legitimacy**
-- **risk / readiness**
-- **continuation law**
-
-↓
-
-## Commit Boundary
-*(database write / external action / real-world effect)*
-
-↓
-
-## Outcome + Receipt
-- **SAFE_COMMIT**
-- **REFUSE_BLOCK**
-- **ESCALATE**
-- **deterministic receipt + replay**
+They preserve *structure*  
+They attempt to preserve *meaning*  
+But they do **not control whether that meaning is allowed to become real**
 
 ---
 
-## Two-Gate Model
+## The Problem
 
-### Gate 1 — Semantic Gate
-- structure
-- completeness
-- correctness
-- semantic validation
+Modern AI + data systems break in two critical places:
 
-### Gate 2 — Execution Gate
-- authority
-- live state alignment
-- constraint compliance
-- branch legitimacy
-- risk / readiness
-- continuation law
+### 1. Semantic Failure
+- Context is incomplete  
+- Meaning is ambiguous  
+- Confidence is unclear  
+- Systems still proceed anyway  
 
-**Outcomes:**
-- SAFE_COMMIT
-- REFUSE_BLOCK
-- ESCALATE
+### 2. Execution Failure
+- Actions are taken under invalid state  
+- Authority is assumed, not verified  
+- Risk is evaluated *after* execution  
+- Systems fail **open instead of closed**
 
 ---
 
-## Quick Run
+## The Missing Layer
 
-```bash
-python run_proof.py
-python run_proof.py --stress 5
-python run_proof.py --output proof_output.json --quiet
-```
+There is no enforced boundary between:
 
-## Proof Output — What to Look For
-
-### Positive Path (Valid Execution)
-- `allowed: true`
-- `outcome: SAFE_COMMIT`
-- `replay: matches: true`
-
-**This shows:**
-- the transition is admissible  
-- the commit boundary was satisfied  
-- replay produces the same result  
-- hashes remain stable → deterministic enforcement  
+**“This makes sense”**  
+and  
+**“This is allowed to happen”**
 
 ---
 
-### Negative Path (Invalid Mutation)
-- `allowed: false`
-- `outcome: REFUSE_BLOCK`
-- `replay: matches: false`
-- mismatches are explicitly listed  
+## The Veritas Model
 
-**This shows:**
-- invalid transitions are blocked before execution  
-- mutation is detected at the boundary  
-- replay divergence is provable and explicit  
+We introduce a **dual-gate system** that enforces reality at the point of execution.
 
----
+### Gate 1 — Semantic Gate  
+> *Is the meaning valid, complete, and trustworthy?*
 
-### Determinism Signal
+Checks:
+- Context completeness  
+- Ambiguity level  
+- Confidence threshold  
 
-Across repeated executions:
-
-- `judgment_against_boundary_hash` remains identical  
-- `judgment_cross_binding_hash` remains identical  
-
-**This proves:**
-- enforcement is not probabilistic  
-- decisions are not influenced by runtime drift  
-- the execution boundary is mathematically stable  
+Outcomes:
+- PASS  
+- REDIRECT  
+- ESCALATE  
 
 ---
 
-## Where This Installs
+### Gate 2 — Execution Gate  
+> *Even if meaning is correct — is execution allowed right now?*
 
-Veritas Aegis is not a replacement for your system.  
-It is the **execution boundary layer** that installs directly before state change.
+Checks:
+- Authority validity  
+- State alignment  
+- Risk thresholds  
+- Execution readiness  
 
----
-
-## What It Requires
-
-- A proposed action (`transition`)  
-- Current system state (`state`)  
-- Authority context (`authority envelope`)  
-- Optional constraints / policies  
-
-That’s it.
-
-- No retraining  
-- No orchestration rewrite  
-- No dependency on upstream model behavior  
+Outcomes:
+- EXECUTE  
+- REDIRECT  
+- ESCALATE  
+- REFUSE  
 
 ---
 
-## What It Guarantees
+## The Core Principle
 
-- No invalid execution can pass the boundary  
-- Every decision is provable and replayable  
-- Identical conditions → identical outcomes  
-- Enforcement is independent of upstream system behavior  
+**The system does not execute because it has a proposal.**
 
----
-
-## What It Replaces
-
-- “best effort” validation layers  
-- post-execution audit logs  
-- non-deterministic decision paths  
-- trust in upstream correctness alone  
+**It executes only if the proposal remains admissible at the moment of commit.**
 
 ---
 
-## What It Does Not Do
+## Why This Matters
 
-- does not generate decisions  
-- does not interpret meaning  
-- does not rely on model alignment  
+If you solve semantic integrity, you still face:
 
----
+- Valid meaning applied under invalid conditions  
+- Clean data triggering unsafe execution  
+- Correct interpretation without enforceable action boundaries  
 
-> **Is this allowed to become real — right now, under current conditions?**
-
----
-
-## What This Demonstrates
-
-**Deterministic execution control**  
-Execution is governed by fixed admissibility rules — not runtime interpretation or drift.
-
-**Fail-closed enforcement**  
-Nothing executes by default. Every transition must prove admissibility at the commit boundary.
-
-**Explicit refusal and escalation conditions**  
-Invalid transitions are not logged — they are actively **blocked or escalated** with defined reasoning.
-
-**Separation of meaning vs. execution authority**  
-Semantic correctness (SDC) does not grant execution rights.  
-Authority is resolved independently at the boundary.
-
-**Receipt-based proof of every decision**  
-Every outcome emits a verifiable, hash-linked receipt that can be independently validated and replayed.
-
-**Deterministic replay guarantees**  
-Identical inputs produce identical outcomes. Replay confirms decision integrity.
-
-**Boundary-level invariance enforcement**  
-Judgment-against-boundary and cross-binding hashes remain stable across executions, proving enforcement is **structurally invariant at the execution boundary**.
+**Semantic correctness alone does not guarantee safe or lawful execution.**
 
 ---
 
-**This system does not observe execution.  
-It determines whether execution is allowed to exist.**
+## What This Repo Demonstrates
+
+A minimal, deterministic runtime that shows:
+
+1. Semantic evaluation (Gate 1)  
+2. Execution admissibility (Gate 2)  
+3. Final decision at the boundary  
+4. Receipt generation with:
+   - decision  
+   - reason  
+   - state hash  
+   - timestamp  
+
+---
+
+## Example Output
+
+{
+  "action": "APPROVE_PRODUCTION_DEPLOYMENT",
+  "semantic_gate": "PASS",
+  "execution_gate": "ESCALATE",
+  "decision": "ESCALATE",
+  "reason": "Execution risk threshold exceeded",
+  "state_hash": "...",
+  "timestamp": "..."
+}
+
+---
+
+## Key Insight
+
+Even when:
+- meaning is correct  
+- data is clean  
+- semantics are preserved  
+
+execution can still be **blocked or escalated**  
+
+Because:
+
+**truth ≠ permission**
+
+---
+
+## Where This Fits
+
+This layer sits directly between:
+
+- AI systems (LLMs, agents, decision engines)  
+- and real-world execution (APIs, workflows, systems)
+
+It enforces:
+
+→ no execution without admissibility  
+→ no assumption of authority  
+→ no silent risk acceptance  
+
+---
+
+## Run the Demo
+
+git clone https://github.com/Kamanaka5502/semantic-integrity-to-execution-boundary.git  
+cd semantic-integrity-to-execution-boundary  
+python example_run.py  
+
+---
+
+## Final Position
+
+This is not a wrapper.  
+This is not observability.  
+This is not post-hoc governance.  
+
+This is **execution control at the boundary of reality.**
+
+---
+
+## Bottom Line
+
+If your system guarantees meaning…
+
+but does not control execution…
+
+**you are still exposed.**
+
+Veritas Aegis closes that gap.
+
+
+---
+
+## Status
+
+This repository includes a runnable proof demonstrating lawful commit, replay stability, and mutation-visible refusal at the execution boundary.
+
+The full runtime includes additional receipt integrity, lineage, and invariant enforcement layers.
