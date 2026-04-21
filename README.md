@@ -34,6 +34,22 @@ SDC Payload → Boundary Gate → Veritas Judgment → State Mutation
 This is not post-execution validation.  
 This is **pre-execution enforcement at the commit boundary**.
 
+## Operational Artifacts
+
+The following artifacts provide concrete operational grounding for the Veritas Aegis execution-boundary system.
+
+They are not conceptual diagrams — they represent workflow structure, boundary gating, and invariant enforcement as implemented.
+
+- Operational Workflow Sheet (XLSX)  
+  → ./docs/operational/veritas_aegis_operational_sheet.xlsx  
+
+- Operational Overview (PPTX)  
+  → ./docs/operational/veritas_aegis_overview.pptx  
+
+These artifacts show the system as it operates:
+
+SDC Payload → Boundary Gate → Veritas Judgment → State Mutation
+
 ## 🧩 System Insight
 
 Traditional schema validation (e.g., XSD) ensures structure,  
