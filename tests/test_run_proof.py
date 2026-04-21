@@ -1,16 +1,25 @@
 import json
+import os
 import subprocess
 import sys
+import tempfile
 
 
 def run_json(*args):
-    result = subprocess.run(
-        [sys.executable, "run_proof.py", "--quiet", *args],
-        capture_output=True,
-        text=True,
-    )
-    assert result.returncode == 0, result.stderr
-    return json.loads(result.stdout)
+    fd, path = tempfile.mkstemp(suffix=".json")
+    os.close(fd)
+    try:
+        result = subprocess.run(
+            [sys.executable, "run_proof.py", "--output", path, "--quiet", *args],
+            capture_output=True,
+            text=True,
+        )
+        assert result.returncode == 0, result.stderr
+        with open(path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    finally:
+        if os.path.exists(path):
+            os.remove(path)
 
 
 def test_run():
