@@ -20,11 +20,13 @@ CORRIDOR = {
 }
 
 
-def sha(data):
-    return hashlib.sha256(json.dumps(data, sort_keys=True).encode()).hexdigest()
+def stable_hash(obj):
+    return hashlib.sha256(
+        json.dumps(obj, sort_keys=True, separators=(",", ":")).encode()
+    ).hexdigest()
 
 
-def build_context(branch="main"):
+def make_context(branch="main"):
     artifact_hash = (
         "ca05d3fb7e15c97bd76f389426722871404e901f5d0ebcdf86210c74ae478e87"
         if branch == "main"
@@ -44,7 +46,7 @@ def build_context(branch="main"):
 
 
 def evaluate(branch="main"):
-    context = build_context(branch)
+    context = make_context(branch)
 
     if branch == "main":
         allowed = True
@@ -57,27 +59,34 @@ def evaluate(branch="main"):
         judgment_mode = "REFUSE_PRESERVE"
         reason_codes = ["INVALID_BRANCH"]
 
-    judgment_act_hash = sha(context)
+    judgment_act_hash = stable_hash(
+        {
+            "requested_transition": context["requested_transition"],
+            "workflow_step": context["workflow_step"],
+            "execution_branch_id": context["execution_branch_id"],
+        }
+    )
 
-    judgment_against_boundary_hash = sha(
+    judgment_against_boundary_hash = stable_hash(
         {
             "commit_boundary": CORRIDOR["commit_boundary"],
             "allowed": allowed,
+            "judgment_mode": judgment_mode,
+            "reason_codes": reason_codes,
             "context": context,
         }
     )
 
-    judgment_cross_binding_hash = sha(
+    judgment_cross_binding_hash = stable_hash(
         {
-            "basis": BASIS["basis_hash"],
-            "state": context["state_hash"],
+            "basis_hash": BASIS["basis_hash"],
+            "state_hash": context["state_hash"],
             "transition": context["requested_transition"],
+            "workflow_step": context["workflow_step"],
         }
     )
 
-    return {
-        "receipt_id": str(uuid.uuid4()),
-        "created_at": time(),
+    receipt_core = {
         "allowed": allowed,
         "outcome": outcome,
         "judgment_mode": judgment_mode,
@@ -86,20 +95,43 @@ def evaluate(branch="main"):
         "judgment_act_hash": judgment_act_hash,
         "judgment_against_boundary_hash": judgment_against_boundary_hash,
         "judgment_cross_binding_hash": judgment_cross_binding_hash,
-        "receipt_hash": sha(context),
+    }
+
+    receipt_hash = stable_hash(
+        {
+            **receipt_core,
+            "receipt_id": str(uuid.uuid4()),
+            "created_at": time(),
+        }
+    )
+
+    return {
+        "receipt_id": str(uuid.uuid4()),
+        "created_at": time(),
+        **receipt_core,
+        "receipt_hash": receipt_hash,
     }
 
 
-def compare(ref, fresh):
+def compare(reference, fresh):
     mismatches = []
 
-    if ref["outcome"] != fresh["outcome"]:
+    if reference["outcome"] != fresh["outcome"]:
         mismatches.append("OUTCOME_MISMATCH")
-    if ref["allowed"] != fresh["allowed"]:
+    if reference["allowed"] != fresh["allowed"]:
         mismatches.append("ALLOWED_MISMATCH")
-    if ref["judgment_against_boundary_hash"] != fresh["judgment_against_boundary_hash"]:
+    if reference["judgment_mode"] != fresh["judgment_mode"]:
+        mismatches.append("JUDGMENT_MODE_MISMATCH")
+    if reference["reason_codes"] != fresh["reason_codes"]:
+        mismatches.append("REASON_CODES_MISMATCH")
+    if (
+        reference["judgment_against_boundary_hash"]
+        != fresh["judgment_against_boundary_hash"]
+    ):
         mismatches.append("JUDGMENT_AGAINST_BOUNDARY_HASH_MISMATCH")
-    if ref["judgment_context"] != fresh["judgment_context"]:
+    if reference["judgment_cross_binding_hash"] != fresh["judgment_cross_binding_hash"]:
+        mismatches.append("CROSS_BINDING_HASH_MISMATCH")
+    if reference["judgment_context"] != fresh["judgment_context"]:
         mismatches.append("JUDGMENT_CONTEXT_MISMATCH")
 
     return {
@@ -109,41 +141,95 @@ def compare(ref, fresh):
     }
 
 
-def build_report(stress=0):
-    pos = evaluate("main")
-    pos_re = evaluate("main")
-    neg_re = evaluate("beta")
+def build_report(stress_iterations=0):
+    positive = evaluate("main")
+    positive_replay = evaluate("main")
+    negative_replay = evaluate("beta")
 
     report = {
         "proof": {
             "corridor": CORRIDOR,
             "basis": BASIS,
             "positive": {
-                "allowed": pos["allowed"],
-                "outcome": pos["outcome"],
-                "judgment_mode": pos["judgment_mode"],
-                "reason_codes": pos["reason_codes"],
-                "receipt_id": pos["receipt_id"],
-                "receipt_hash": pos["receipt_hash"],
-                "judgment_against_boundary_hash": pos["judgment_against_boundary_hash"],
-                "judgment_cross_binding_hash": pos["judgment_cross_binding_hash"],
-                "replay": compare(pos, pos_re),
+                "allowed": positive["allowed"],
+                "outcome": positive["outcome"],
+                "judgment_mode": positive["judgment_mode"],
+                "reason_codes": positive["reason_codes"],
+                "receipt_id": positive["receipt_id"],
+                "receipt_hash": positive["receipt_hash"],
+                "judgment_against_boundary_hash": positive["judgment_against_boundary_hash"],
+                "judgment_cross_binding_hash": positive["judgment_cross_binding_hash"],
+                "replay": compare(positive, positive_replay),
             },
             "negative": {
                 "mutation": "execution_branch_id=beta",
-                "replay": compare(pos, neg_re),
+                "replay": compare(positive, negative_replay),
             },
         }
     }
 
-    if stress > 0:
-        runs = [evaluate("main") for _ in range(stress)]
+    if stress_iterations > 0:
+        runs = [evaluate("main") for _ in range(stress_iterations)]
+        positive_replays = [compare(positive, evaluate("main")) for _ in range(stress_iterations)]
+
         report["stress"] = {
-            "iterations": stress,
-            "deterministic": True,
+            "iterations": stress_iterations,
+            "unique_judgment_against_boundary_hash_count": len(
+                {r["judgment_against_boundary_hash"] for r in runs}
+            ),
+            "unique_judgment_cross_binding_hash_count": len(
+                {r["judgment_cross_binding_hash"] for r in runs}
+            ),
+            "unique_outcomes": sorted({r["outcome"] for r in runs}),
+            "all_positive_replays_match": all(r["matches"] for r in positive_replays),
+            "deterministic": (
+                len({r["judgment_against_boundary_hash"] for r in runs}) == 1
+                and len({r["judgment_cross_binding_hash"] for r in runs}) == 1
+                and all(r["matches"] for r in positive_replays)
+            ),
         }
 
     return report
+
+
+def print_human_summary(report, stress_iterations):
+    print("============================================================")
+    print("VERITAS AEGIS — PROOF RUN")
+    print("============================================================")
+
+    positive = report["proof"]["positive"]
+    negative = report["proof"]["negative"]
+
+    print("\nPositive case")
+    print(f"Allowed: {positive['allowed']}")
+    print(f"Outcome: {positive['outcome']}")
+    print(f"Judgment mode: {positive['judgment_mode']}")
+    print(f"Reason codes: {', '.join(positive['reason_codes'])}")
+    print(f"Receipt ID: {positive['receipt_id']}")
+    print(f"Receipt Hash: {positive['receipt_hash']}")
+    print(f"Replay Match: {positive['replay']['matches']}")
+    print(f"Replay Mismatches: {positive['replay']['mismatches']}")
+
+    print("\nNegative case (wrong branch id)")
+    print(f"Mutation: {negative['mutation']}")
+    print(f"Replay Match: {negative['replay']['matches']}")
+    print(f"Replay Mismatches: {negative['replay']['mismatches']}")
+
+    if stress_iterations > 0:
+        stress = report["stress"]
+        print("\nDeterminism stress")
+        print(f"Iterations: {stress['iterations']}")
+        print(
+            "Unique boundary hashes: "
+            f"{stress['unique_judgment_against_boundary_hash_count']}"
+        )
+        print(
+            "Unique cross-binding hashes: "
+            f"{stress['unique_judgment_cross_binding_hash_count']}"
+        )
+        print(f"Unique outcomes: {', '.join(stress['unique_outcomes'])}")
+        print(f"All positive replays match: {stress['all_positive_replays_match']}")
+        print(f"Deterministic: {stress['deterministic']}")
 
 
 def main():
@@ -159,18 +245,10 @@ def main():
         Path(args.output).write_text(json.dumps(report, indent=2))
 
     if not args.quiet:
-        print("============================================================")
-        print("VERITAS AEGIS — PROOF RUN")
-        print("============================================================")
-
-        print("\nPositive case")
-        print("Allowed:", report["proof"]["positive"]["allowed"])
-        print("Outcome:", report["proof"]["positive"]["outcome"])
-
-        print("\nNegative case")
-        print("Replay Match:", report["proof"]["negative"]["replay"]["matches"])
-
-    if not args.output:
+        print_human_summary(report, args.stress)
+        print()
+        print(json.dumps(report, indent=2))
+    elif not args.output:
         print(json.dumps(report, indent=2))
 
 
