@@ -68,7 +68,7 @@ This repository includes a concrete integration showing how a semantic system (S
 
 ## Scenario
 
-An SDC-validated payload arrives at a system boundary:
+A SDC-validated payload arrives at a system boundary:
 
 - SDC guarantees: **semantic correctness**  
 - Veritas determines: **execution admissibility at commit**  
