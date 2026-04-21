@@ -4,21 +4,24 @@ A deterministic execution-boundary proof surface showing how a semantically vali
 
 ## Core Idea
 
-SDC validates the instruction.
+SDC checks the instruction.
 
 Veritas decides whether it is allowed to become real.
 
 ## Two-Gate Model
 
-Gate 1 — Semantic Gate (upstream)
+### Gate 1 — Semantic Gate
 - structure
 - completeness
 - correctness
+- semantic validation
 
-Gate 2 — Execution Gate (Veritas)
+### Gate 2 — Execution Gate
 - authority
 - live state alignment
-- constraints
+- constraint compliance
+- branch legitimacy
+- risk / readiness
 - continuation law
 
 Outcomes:
@@ -28,13 +31,7 @@ Outcomes:
 
 ## Quick Run
 
-pip install -e .
-
+```bash
 python run_proof.py
-
-## What You’ll See
-
-- Positive path → SAFE_COMMIT
-- Negative mutation → mismatch
-
-This shows the boundary actually working.
+python run_proof.py --stress 5
+python run_proof.py --output proof_output.json --quiet

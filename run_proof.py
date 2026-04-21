@@ -1,63 +1,23 @@
+from __future__ import annotations
+import argparse
 import json
-import hashlib
-import time
+from pathlib import Path
+from veritas_surface.runtime import run_proof
 
-def hash_obj(obj):
-    return hashlib.sha256(json.dumps(obj, sort_keys=True).encode()).hexdigest()
+def parse_args():
+    parser = argparse.ArgumentParser(description="Run the Veritas public proof surface.")
+    parser.add_argument("--output", type=Path, default=None)
+    parser.add_argument("--stress", type=int, default=0)
+    parser.add_argument("--quiet", action="store_true")
+    return parser.parse_args()
 
-def evaluate(payload):
-    if payload.get("branch") != "main":
-        return {
-            "allowed": False,
-            "outcome": "REFUSE_BLOCK",
-            "reason": "INVALID_BRANCH"
-        }
-    return {
-        "allowed": True,
-        "outcome": "SAFE_COMMIT",
-        "reason": "LAWFUL_COMMIT_AUTHORIZED"
-    }
-
-def run():
-    payload = {
-        "action": "TRANSFER_FUNDS",
-        "branch": "main",
-        "state": {"balance": 100}
-    }
-
-    state_hash = hash_obj(payload["state"])
-    decision = evaluate(payload)
-
-    receipt = {
-        "timestamp": time.time(),
-        "payload": payload,
-        "decision": decision,
-        "state_hash": state_hash
-    }
-
-    replay = evaluate(payload)
-
-    mutated_payload = payload.copy()
-    mutated_payload["branch"] = "beta"
-    mutated_replay = evaluate(mutated_payload)
-
-    output = {
-        "proof": {
-            "positive": {
-                "allowed": decision["allowed"],
-                "outcome": decision["outcome"],
-                "replay": {"matches": decision == replay}
-            },
-            "negative": {
-                "replay": {
-                    "matches": decision == mutated_replay,
-                    "mismatches": ["branch violation"]
-                }
-            }
-        }
-    }
-
-    print(json.dumps(output, indent=2))
+def main():
+    args = parse_args()
+    report = run_proof(stress=args.stress)
+    if args.output:
+        args.output.write_text(json.dumps(report, indent=2, sort_keys=True))
+    if not args.quiet:
+        print(json.dumps(report, indent=2))
 
 if __name__ == "__main__":
-    run()
+    main()
