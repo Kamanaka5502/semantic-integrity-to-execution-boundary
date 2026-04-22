@@ -1,4 +1,5 @@
 import json
+import os
 from http.server import BaseHTTPRequestHandler, HTTPServer
 
 from app.adapter import from_sdc
@@ -8,8 +9,8 @@ from app.receipt import create_receipt, create_proof_receipt
 from app.replay import replay
 
 
-HOST = "0.0.0.0"
-PORT = 8001
+HOST = os.getenv("HOST", "0.0.0.0")
+PORT = int(os.getenv("PORT", "8001"))
 
 
 def build_runtime_response(payload):
@@ -106,7 +107,6 @@ class VeritasHandler(BaseHTTPRequestHandler):
                 "version": "0.1.0"
             })
             return
-
         self._send_json(404, {"error": "Not found"})
 
     def do_POST(self):
