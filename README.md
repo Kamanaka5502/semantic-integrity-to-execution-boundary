@@ -1,3 +1,15 @@
+> ⚠️ **Proprietary System Notice**
+>
+> This repository represents a **public proof surface only**.
+>
+> The full Veritas Aegis execution-boundary runtime, admissibility engine,
+> and enforcement substrate are **not included** and remain private.
+>
+> This code is provided strictly for **evaluation and demonstration**.
+> No rights are granted to reuse, replicate, or derive from this system.
+>
+> See `PROPRIETARY.md` for full terms.
+
 # Veritas Aegis — Execution Boundary System
 
 Nothing becomes real unless it proves admissibility at commit.
