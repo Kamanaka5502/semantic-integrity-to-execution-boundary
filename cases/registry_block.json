@@ -1,0 +1,12 @@
+{
+  "corridor": "registry",
+  "action": "COMMIT_RECORD_UPDATE",
+  "user": "clerk_2",
+  "authority": 5,
+  "prior_state": "CHANGE_APPROVED",
+  "payload": {
+    "record_id": "R-222",
+    "identity_match": false,
+    "change_summary": "name correction"
+  }
+}

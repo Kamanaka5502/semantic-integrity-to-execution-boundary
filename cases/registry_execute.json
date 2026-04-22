@@ -1,0 +1,12 @@
+{
+  "corridor": "registry",
+  "action": "APPROVE_RECORD_CHANGE",
+  "user": "clerk_1",
+  "authority": 5,
+  "prior_state": "IDENTITY_VALIDATED",
+  "payload": {
+    "record_id": "R-221",
+    "identity_match": true,
+    "change_summary": "address update"
+  }
+}

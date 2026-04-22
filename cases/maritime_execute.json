@@ -1,0 +1,12 @@
+{
+  "corridor": "maritime",
+  "action": "AUTHORIZE_DEPARTURE",
+  "user": "harbor_master",
+  "authority": 7,
+  "prior_state": "REVIEWED",
+  "payload": {
+    "vessel_id": "V-901",
+    "manifest_complete": true,
+    "compliance_clear": true
+  }
+}

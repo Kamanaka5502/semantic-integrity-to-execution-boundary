@@ -1,0 +1,11 @@
+{
+  "corridor": "healthcare",
+  "action": "APPROVE_PATIENT",
+  "user": "doctor_2",
+  "authority": 3,
+  "prior_state": "PENDING_APPROVAL",
+  "payload": {
+    "patient_id": "P-1002",
+    "clinical_context": "stable"
+  }
+}

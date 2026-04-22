@@ -1,0 +1,12 @@
+{
+  "corridor": "education",
+  "action": "AUTHORIZE_ENROLLMENT",
+  "user": "registrar_1",
+  "authority": 4,
+  "prior_state": "REVIEWED",
+  "payload": {
+    "student_id": "S-777",
+    "eligibility_confirmed": true,
+    "program_code": "ENG101"
+  }
+}

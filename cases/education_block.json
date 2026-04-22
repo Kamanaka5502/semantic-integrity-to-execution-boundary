@@ -1,0 +1,12 @@
+{
+  "corridor": "education",
+  "action": "COMMIT_ENROLLMENT",
+  "user": "registrar_2",
+  "authority": 4,
+  "prior_state": "AUTHORIZED",
+  "payload": {
+    "student_id": "S-778",
+    "eligibility_confirmed": false,
+    "program_code": "ENG102"
+  }
+}
