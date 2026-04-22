@@ -43,6 +43,22 @@ This is pre-execution enforcement at the commit boundary.
 
 ---
 
+## 💼 What You’re Buying
+
+This system provides:
+
+- Pre-execution enforcement at the commit boundary  
+- Deterministic decisioning (EXECUTE / ESCALATE / REFUSE)  
+- Cryptographic receipts for every decision  
+- Replay verification for audit and compliance  
+
+Deployable as:
+- API service
+- Embedded runtime layer
+- Enforcement boundary for existing systems
+
+---
+
 ## System Overview
 
 Veritas Aegis evaluates whether a proposed state transition is allowed to become real.
