@@ -1,0 +1,697 @@
+{
+  "proof": {
+    "basis": {
+      "basis_hash": "cba84bdd252a646772f7dda7fb8ed29b13633349996e08d37ccaa6f9cfb64af2",
+      "basis_id": "tmu-demo-basis",
+      "lineage_hash": "7178f12de027d4fdeffc588168f940bfa043a04faf915eeb825a3b3f1b6062ac",
+      "version": "1.0.0"
+    },
+    "corridor": {
+      "authority_scope": [
+        "commit_scope"
+      ],
+      "commit_boundary": "attending_signoff",
+      "negative_case": "execution_branch_id=branch-beta",
+      "transition": "approve_order"
+    },
+    "negative": {
+      "mutation": "execution_branch_id=branch-beta",
+      "replay": {
+        "fresh": {
+          "artifact_id": "artifact-001",
+          "created_at": "2026-04-20T17:56:52+00:00",
+          "judgment": {
+            "continuation_judgment": {
+              "carry_directive": "CONTINUE_SELF",
+              "carry_forward_hash": "5b24a528ce64936445c62bb4c4421b3396c2029edc3519f657df36448590778a",
+              "carry_reason_codes": [
+                "BRANCH_WITNESS_HASH_MISMATCH",
+                "EXECUTION_BRANCH_MISMATCH"
+              ],
+              "continuation_constraints": [
+                "no_open_debt"
+              ],
+              "continuation_corridor": null,
+              "continuation_intent": "continue current lawful branch",
+              "continuation_result": "DENY",
+              "continuation_witness_hash": "298c518f418ce5a5caa2328f8b62d101dc49560107ff50887ce458712d9ae4d0",
+              "continuity_debt_in": [],
+              "continuity_debt_out": [],
+              "continuity_mode": "self",
+              "debt_action": "UNCHANGED",
+              "expected_continuation_result": "ALLOW",
+              "inherited_continuity_condition": "clear",
+              "next_required_witnesses": [],
+              "parent_branch_id": null,
+              "parent_continuity_verified": false,
+              "parent_receipt_witness_hash": null,
+              "self_continuation_lawful": false
+            },
+            "judgment_context": {
+              "artifact_boundary_act_hash": "8ed625185c1b3bd086822a456b845493b1dfeec34368f7437db24c84574840df",
+              "artifact_boundary_claim_hash": "0c3ec4e8ae0b3ddd1861d9fa1897a3900fdf390087d9b25cd2960dd9f991ce88",
+              "artifact_bridge_hash": "5875b9db2b58906ad554cd0080156998b2ecc728301034a0987b4b8ca3d7fa12",
+              "artifact_continuation_act_hash": "7a9470bbf1e1dbda526d929e63e70a9871548d569978fe2acef33c9ef181629f",
+              "artifact_cross_binding_hash": "1a116b34f46bd2442baf2b97797408452c65b527436a28c38c0d8f3e84f5efbd",
+              "artifact_executable_act_hash": "613794305f149a0df7f1e7f010a7b9b57132649630845053c5823e84371934b7",
+              "artifact_id": "artifact-001",
+              "artifact_payload_hash": "08edc9d84bdc986f5ed61c0da7e6026394df3598671768ee26294145f91f76cc",
+              "artifact_signature": "ebcea41f7d74eade65f77405b1295821c9b50edf51e3bfacfc9da45ed15eb4d6",
+              "artifact_witness_hash": "600096e6a366b742160df949e0235c85cd4776232d76e8fcc8be47261e4628c0",
+              "branch_derivation": "DERIVATIVE",
+              "branch_role": "EXECUTION_BOUNDARY_STEWARD",
+              "branch_witness_hash": "227e7a3e0f297cc4e00305e3e2a0c7ba28e3963dad1788c056dde785f278e772",
+              "continuity_chain_head": null,
+              "continuity_mode": "self",
+              "continuity_witness_hash": "9b837f6ae46d0a8de8092d67fd178b250c26d750f699342a197e5c9b9da50b66",
+              "contract_version": "sam.v13",
+              "executable_claim": "approve_order",
+              "execution_branch_id": "branch-beta",
+              "governing_basis_hash": "cba84bdd252a646772f7dda7fb8ed29b13633349996e08d37ccaa6f9cfb64af2",
+              "governing_basis_id": "tmu-demo-basis",
+              "governing_basis_lineage_hash": "7178f12de027d4fdeffc588168f940bfa043a04faf915eeb825a3b3f1b6062ac",
+              "governing_basis_version": "1.0.0",
+              "logic_version": "demo.logic.v1",
+              "parent_receipt_id": null,
+              "parent_receipt_witness_hash": null,
+              "receipt_kind": "continuation_judgment_receipt",
+              "source_intent": "approve order under TMU boundary demo",
+              "state_current_status": "PENDING",
+              "state_entity_id": "entity-001",
+              "state_hash": "afeb2a9ce1e28cd40d35efe22f2b0a000d532bb24e5c66b143ab7b598c3bed34",
+              "state_open_burden_codes": [],
+              "state_ref": "state-001",
+              "translation_digest": "digest-001",
+              "translation_outcome": "PRESERVE",
+              "translation_witness_hash": "75e38c17f16d3fd87eb04edc4d0a70649c3acefdf4611125a9273129ca487a0e"
+            },
+            "outcome_judgment": {
+              "admissibility_result": "DENY",
+              "burden_result": "TERMINAL",
+              "escalation_target": null,
+              "judgment_mode": "REFUSE_PRESERVE",
+              "outcome": "REFUSE_BLOCK",
+              "outcome_witness_hash": "fdb2fc924f2e3e0710e1ff61e8481e421afee35904f56201f0fd4747d5396791",
+              "preserved_transition": "approve_order",
+              "reason_codes": [
+                "BRANCH_WITNESS_HASH_MISMATCH",
+                "EXECUTION_BRANCH_MISMATCH"
+              ]
+            },
+            "preservation_record": {
+              "blocked_transition": "approve_order",
+              "continuation_disposition": "SELF_CONTINUATION_TERMINATED",
+              "preservation_actions": [
+                "BLOCK_STATE_MUTATION",
+                "PRESERVE_BRANCH_MANIFOLD"
+              ],
+              "preservation_reason": "BRANCH_WITNESS_HASH_MISMATCH",
+              "preservation_reason_codes": [
+                "BRANCH_WITNESS_HASH_MISMATCH",
+                "EXECUTION_BRANCH_MISMATCH"
+              ],
+              "preservation_result": "PRESERVE_BLOCK",
+              "preservation_witness_hash": "9fbd5c7fb160aa866567df377374231adc7eb8850cc6d3a8266efd5090501ccc",
+              "preserved_basis_hash": "cba84bdd252a646772f7dda7fb8ed29b13633349996e08d37ccaa6f9cfb64af2",
+              "preserved_branch_id": "branch-beta",
+              "preserved_continuation_corridor": null,
+              "preserved_debt_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "preserved_manifold": "commit_boundary_manifold",
+              "preserved_state_hash": "afeb2a9ce1e28cd40d35efe22f2b0a000d532bb24e5c66b143ab7b598c3bed34",
+              "preserved_transition": "approve_order",
+              "prevented_branch_drift": true,
+              "redirect_open": false,
+              "refusal_preserves_manifold": true,
+              "self_continuation_terminated": true
+            },
+            "standing_judgment": {
+              "authority_scope_used": [],
+              "standing_after": "INVALID",
+              "standing_before": "NONE",
+              "standing_change_reason": null,
+              "standing_narrowed_by": [],
+              "standing_result": "INVALID",
+              "standing_witness_hash": "2eb74fbc2e2cdcb1837be3736c2e508fa155d679336f152236a837a2ad7a2fe5"
+            }
+          },
+          "proof": {
+            "continuation_judgment": {
+              "section": "continuation_judgment",
+              "section_hash": "8b2eda88d0ee4f977b2ab1b7a95b2bc22603c9894228ae0c471f1c554e4756d5",
+              "section_signature": "6a8f66f7e92bde6fcdc2b0e6f3f2755c95a68275d50ce4999a94b399a899e39b"
+            },
+            "continuation_preservation_binding_hash": "0dee7a3279862c3f90be44f3ae7740f8a52777ce66f13c806daf10e47fc4e2a1",
+            "judgment_act_hash": "146bc99825c0ba7453da2db8bb2651506dc3163c45f17982be3e2adaf5fbdaa4",
+            "judgment_against_boundary_hash": "964ff1c4069f920834556b59f4d0c6b2301f69eac219ef50c53034e227bafe33",
+            "judgment_context": {
+              "section": "judgment_context",
+              "section_hash": "57676622fb755f43b4d110f872e854a68659a1888e9f021edb573b1bc16b076e",
+              "section_signature": "4067e06ba547014b2f7a3f924a0c90e63e0991d4fd5148093c36a96e74da65bd"
+            },
+            "judgment_cross_binding_hash": "e65aca2a792767554ccb2fc35ff35557d6523bdcdfb8b660d65f37e32d659a03",
+            "judgment_surface_hash": "a17a2f2d00d3a3d2c0e25fad1fe12e1229fea77b5f69d93dac90ff0a5174edc8",
+            "judgment_witness_hash": "6d0152d5cbde42f60a1e6d47766a1aa22e7f29edaadc2423810834bb3f6ccb54",
+            "lawful_context_proof": "23fd132cb37ff664b2dc41aab0f76ab90afb4ea308f40fa9ff0bcc500a4b7a5c",
+            "outcome_judgment": {
+              "section": "outcome_judgment",
+              "section_hash": "c9ca0693bbe6bfbdfeaccae4995aea9650d7ee07d9edf5cb594fe06a5817a02e",
+              "section_signature": "a819ae4a44e13adfe4dc04d459fa18b15082896ce9bc541a3d1615376b55bd4e"
+            },
+            "preservation_record": {
+              "section": "preservation_record",
+              "section_hash": "1ec7c681eccfb8e8040aeb08c6345f171aa9ca8da9464ba6cfa2630640bee9c8",
+              "section_signature": "6561eab963b6fd1c7beb266313c4edcd752f14e9bfb49274969c5b36b91a25ba"
+            },
+            "proof_surface_hash": "c88f0a89e07941e1c245ed5d57824eb7bb49f0d4d92eccf19a4e9fad1467ba3c",
+            "receipt_binding_hash": "a84450192948ea38c48831856d9ae093f89b40e04c8b9283b6909f9f9d92b1fb",
+            "receipt_hash": "ed47ac80f2b596411b8b4bc3e7fe41ec79a742d09624119debc06a7b13405e9e",
+            "receipt_signature": "82267cb2e6a69319de912f1872c5ac3cd4e3adc5d61f1e0f7c36c2dbe89bee29",
+            "standing_judgment": {
+              "section": "standing_judgment",
+              "section_hash": "459b62bd2d55b78a4ef01c5a8166fcc01711c7df2063eb3759dfcd76b70498d9",
+              "section_signature": "96f3a3d239cb6e3d0a41526f8c8fe6b88df06ecb71f81b8e703ccf8db5206aec"
+            }
+          },
+          "receipt_id": "8d2d9152-ac05-4816-8a2e-18c21cd3e8b4"
+        },
+        "matches": false,
+        "mismatches": [
+          "ARTIFACT_BOUNDARY_ACT_HASH_MISMATCH",
+          "JUDGMENT_ACT_HASH_MISMATCH",
+          "JUDGMENT_AGAINST_BOUNDARY_HASH_MISMATCH",
+          "CONTINUATION_PRESERVATION_BINDING_HASH_MISMATCH",
+          "CONTINUATION_WITNESS_HASH_MISMATCH",
+          "CARRY_FORWARD_HASH_MISMATCH",
+          "PRESERVATION_WITNESS_HASH_MISMATCH",
+          "LAWFUL_CONTEXT_PROOF_MISMATCH",
+          "JUDGMENT_CONTEXT_MISMATCH",
+          "STANDING_JUDGMENT_MISMATCH",
+          "CONTINUATION_JUDGMENT_MISMATCH",
+          "OUTCOME_JUDGMENT_MISMATCH",
+          "PRESERVATION_RECORD_MISMATCH"
+        ],
+        "stored": {
+          "artifact_id": "artifact-001",
+          "created_at": "2026-04-20T17:56:52+00:00",
+          "judgment": {
+            "continuation_judgment": {
+              "carry_directive": "CONTINUE_SELF",
+              "carry_forward_hash": "30548fcc29c927953dea59723cf8033f0e82d313d7d21d990cc7c508b94b0d3b",
+              "carry_reason_codes": [
+                "LAWFUL_COMMIT_AUTHORIZED"
+              ],
+              "continuation_constraints": [
+                "no_open_debt"
+              ],
+              "continuation_corridor": null,
+              "continuation_intent": "continue current lawful branch",
+              "continuation_result": "ALLOW",
+              "continuation_witness_hash": "ec77abdb9b07c1e626b0a46df7d8f12484713c8f84b4136b377bf09da195ce24",
+              "continuity_debt_in": [],
+              "continuity_debt_out": [],
+              "continuity_mode": "self",
+              "debt_action": "UNCHANGED",
+              "expected_continuation_result": "ALLOW",
+              "inherited_continuity_condition": "clear",
+              "next_required_witnesses": [],
+              "parent_branch_id": null,
+              "parent_continuity_verified": true,
+              "parent_receipt_witness_hash": null,
+              "self_continuation_lawful": true
+            },
+            "judgment_context": {
+              "artifact_boundary_act_hash": "4c3c238eba8312b4ef9ea7e208d2c50335d7a674858860d400c05116f4f1380a",
+              "artifact_boundary_claim_hash": "a600d79151d63bdbcdf359139e306bee34af5ada9d38b2e62cfb0ac4fff0417d",
+              "artifact_bridge_hash": "32a8f6e5a054c4ae711662a3d11d8a5b547c292c3ccd2a277fc19734b249ab09",
+              "artifact_continuation_act_hash": "8d734fa94ba19405b2e3904210b05d3726da7097b9075d10a8e596f93ed6c5d1",
+              "artifact_cross_binding_hash": "d712258e59df90e22db0662f8952293d0a25a34d4d58950bf2dba98cde6be46c",
+              "artifact_executable_act_hash": "fe113abf469b71f57f2dd201e2cdfaf10b9ad59c558b765780760f01903cc022",
+              "artifact_id": "artifact-001",
+              "artifact_payload_hash": "08edc9d84bdc986f5ed61c0da7e6026394df3598671768ee26294145f91f76cc",
+              "artifact_signature": "7b002852aacad198f35683d1cfc3d31cbe74ee0b73c55f33c4a2f965c6caa673",
+              "artifact_witness_hash": "2d140aa07f47329c5a18518bc6db6091c9458429becf215ea31302e0b01bec19",
+              "branch_derivation": "DERIVATIVE",
+              "branch_role": "EXECUTION_BOUNDARY_STEWARD",
+              "branch_witness_hash": "227e7a3e0f297cc4e00305e3e2a0c7ba28e3963dad1788c056dde785f278e772",
+              "continuity_chain_head": null,
+              "continuity_mode": "self",
+              "continuity_witness_hash": "9b837f6ae46d0a8de8092d67fd178b250c26d750f699342a197e5c9b9da50b66",
+              "contract_version": "sam.v13",
+              "executable_claim": "approve_order",
+              "execution_branch_id": "branch-alpha",
+              "governing_basis_hash": "cba84bdd252a646772f7dda7fb8ed29b13633349996e08d37ccaa6f9cfb64af2",
+              "governing_basis_id": "tmu-demo-basis",
+              "governing_basis_lineage_hash": "7178f12de027d4fdeffc588168f940bfa043a04faf915eeb825a3b3f1b6062ac",
+              "governing_basis_version": "1.0.0",
+              "logic_version": "demo.logic.v1",
+              "parent_receipt_id": null,
+              "parent_receipt_witness_hash": null,
+              "receipt_kind": "continuation_judgment_receipt",
+              "source_intent": "approve order under TMU boundary demo",
+              "state_current_status": "PENDING",
+              "state_entity_id": "entity-001",
+              "state_hash": "afeb2a9ce1e28cd40d35efe22f2b0a000d532bb24e5c66b143ab7b598c3bed34",
+              "state_open_burden_codes": [],
+              "state_ref": "state-001",
+              "translation_digest": "digest-001",
+              "translation_outcome": "PRESERVE",
+              "translation_witness_hash": "75e38c17f16d3fd87eb04edc4d0a70649c3acefdf4611125a9273129ca487a0e"
+            },
+            "outcome_judgment": {
+              "admissibility_result": "ALLOW",
+              "burden_result": "NONE",
+              "escalation_target": null,
+              "judgment_mode": "SAFE_COMMIT",
+              "outcome": "SAFE_COMMIT",
+              "outcome_witness_hash": "dafc87edbc1969789ca2ce8393c19680e8a05a27742d70fb5e1029a7eb42150c",
+              "preserved_transition": "approve_order",
+              "reason_codes": [
+                "LAWFUL_COMMIT_AUTHORIZED"
+              ]
+            },
+            "preservation_record": {
+              "blocked_transition": "approve_order",
+              "continuation_disposition": "CONTINUATION_CLEAR",
+              "preservation_actions": [],
+              "preservation_reason": "LAWFUL_COMMIT_AUTHORIZED",
+              "preservation_reason_codes": [
+                "LAWFUL_COMMIT_AUTHORIZED"
+              ],
+              "preservation_result": "PASS_THROUGH",
+              "preservation_witness_hash": "497de16922750e7920c2fce380ab5de51c916dd40c44fafbce90b273fe1120a5",
+              "preserved_basis_hash": "cba84bdd252a646772f7dda7fb8ed29b13633349996e08d37ccaa6f9cfb64af2",
+              "preserved_branch_id": "branch-alpha",
+              "preserved_continuation_corridor": null,
+              "preserved_debt_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "preserved_manifold": "commit_boundary_manifold",
+              "preserved_state_hash": "afeb2a9ce1e28cd40d35efe22f2b0a000d532bb24e5c66b143ab7b598c3bed34",
+              "preserved_transition": "approve_order",
+              "prevented_branch_drift": false,
+              "redirect_open": false,
+              "refusal_preserves_manifold": false,
+              "self_continuation_terminated": false
+            },
+            "standing_judgment": {
+              "authority_scope_used": [
+                "commit_scope"
+              ],
+              "standing_after": "VALID",
+              "standing_before": "PENDING",
+              "standing_change_reason": null,
+              "standing_narrowed_by": [],
+              "standing_result": "VALID",
+              "standing_witness_hash": "4646c577fabdd3edeff8e5c29ee54e4cbe112fd413cff43a876f5b3183bb0de5"
+            }
+          },
+          "proof": {
+            "continuation_judgment": {
+              "section": "continuation_judgment",
+              "section_hash": "f4e9db67cd3b98c6f835c65536ca2d2e7e80ac86a025a75bfcc0f362829a6121",
+              "section_signature": "6a2c447ad177dc2866df712288308637f8115f5bc275c96d0474965d4313a988"
+            },
+            "continuation_preservation_binding_hash": "5b83c4ed43d2fb5d8bf771bc5fbecc023da6470258eac022db89581f87cd0d3e",
+            "judgment_act_hash": "7e7da0bea62692aac6848103448053af61a3a78db7f6d3dbf445a9befdd116a7",
+            "judgment_against_boundary_hash": "175a4ed195a0048cde767122a56df0502142d9bd4bb454692663f1a645d7fb9d",
+            "judgment_context": {
+              "section": "judgment_context",
+              "section_hash": "8d3030983081e41d6539fee28df2df138f5ebf43d2b9c0203c1f3f6608eb47ee",
+              "section_signature": "e0eb9c6a7bd616ce9204650c020fa19edfdb6321304220849cb731bedfbbb753"
+            },
+            "judgment_cross_binding_hash": "357999df5d96b4ace6928008393a9ce471fc05ba311377e8e8c006421967cf63",
+            "judgment_surface_hash": "5e79617fd816b5fc1dee2ae425398c744b6008829e1e4634e881a36a756c25f8",
+            "judgment_witness_hash": "4a035e0b511e4cf0f3e13f41285b6fde37c469a66c0566c6f03f25c5e925a069",
+            "lawful_context_proof": "de361391f0b8733bdc79d801b994090d2c2a19e1611fa45c144dd514dc2b4365",
+            "outcome_judgment": {
+              "section": "outcome_judgment",
+              "section_hash": "1b42a2518ef49bc585b1f95ab5b402a6f017365f1972c4ca8dd41477a869af85",
+              "section_signature": "93d8f284907f3a3feef9589252f94279ed4bb2a3c0db0b6e10ee65474ecc7efb"
+            },
+            "preservation_record": {
+              "section": "preservation_record",
+              "section_hash": "3cd434e9bdc33e14d80a7a906b5a8a34452a597390bbbff24919496fb26c7173",
+              "section_signature": "9481278d14c21f1c05515eeeef30c1e7844755eb661ac1aae5b60cbfb15679d1"
+            },
+            "proof_surface_hash": "f41948313bcce1d51ae67ccf2232d1c9975a68e5c29235e004450f7364f87539",
+            "receipt_binding_hash": "a2330401e2903bf57adc401f2bce01cedcdb1d1a708af5adbb33d36e61efad43",
+            "receipt_hash": "a9591f1907fcbeb3aec7a40fce3d964663666dccaaf608e9de04de4b3dbe74fb",
+            "receipt_signature": "566b2a48a2dc73e03441b1a4c781b61c358c8c1862c5ad310bde7f240aedfe80",
+            "standing_judgment": {
+              "section": "standing_judgment",
+              "section_hash": "bddaea79b8ff0e089eec320379a0ce3c2b3247072d98d7ca42a8f6e28f05a91e",
+              "section_signature": "3c1be2d2d9c2669a852526aa1b1fbd4585e3775e769963923e358a007813cf80"
+            }
+          },
+          "receipt_id": "e4cde021-d5d2-4174-89d6-ac13b1bb2e83"
+        }
+      },
+      "tampered_artifact_hash": "d39cf2969826a6698ab624a9c593153d876708743b6dbd9d8bfca7115b5cbe29"
+    },
+    "positive": {
+      "allowed": true,
+      "judgment_against_boundary_hash": "175a4ed195a0048cde767122a56df0502142d9bd4bb454692663f1a645d7fb9d",
+      "judgment_cross_binding_hash": "357999df5d96b4ace6928008393a9ce471fc05ba311377e8e8c006421967cf63",
+      "judgment_mode": "SAFE_COMMIT",
+      "outcome": "SAFE_COMMIT",
+      "reason_codes": [
+        "LAWFUL_COMMIT_AUTHORIZED"
+      ],
+      "receipt_hash": "a9591f1907fcbeb3aec7a40fce3d964663666dccaaf608e9de04de4b3dbe74fb",
+      "receipt_id": "e4cde021-d5d2-4174-89d6-ac13b1bb2e83",
+      "replay": {
+        "fresh": {
+          "artifact_id": "artifact-001",
+          "created_at": "2026-04-20T17:56:52+00:00",
+          "judgment": {
+            "continuation_judgment": {
+              "carry_directive": "CONTINUE_SELF",
+              "carry_forward_hash": "30548fcc29c927953dea59723cf8033f0e82d313d7d21d990cc7c508b94b0d3b",
+              "carry_reason_codes": [
+                "LAWFUL_COMMIT_AUTHORIZED"
+              ],
+              "continuation_constraints": [
+                "no_open_debt"
+              ],
+              "continuation_corridor": null,
+              "continuation_intent": "continue current lawful branch",
+              "continuation_result": "ALLOW",
+              "continuation_witness_hash": "ec77abdb9b07c1e626b0a46df7d8f12484713c8f84b4136b377bf09da195ce24",
+              "continuity_debt_in": [],
+              "continuity_debt_out": [],
+              "continuity_mode": "self",
+              "debt_action": "UNCHANGED",
+              "expected_continuation_result": "ALLOW",
+              "inherited_continuity_condition": "clear",
+              "next_required_witnesses": [],
+              "parent_branch_id": null,
+              "parent_continuity_verified": true,
+              "parent_receipt_witness_hash": null,
+              "self_continuation_lawful": true
+            },
+            "judgment_context": {
+              "artifact_boundary_act_hash": "4c3c238eba8312b4ef9ea7e208d2c50335d7a674858860d400c05116f4f1380a",
+              "artifact_boundary_claim_hash": "a600d79151d63bdbcdf359139e306bee34af5ada9d38b2e62cfb0ac4fff0417d",
+              "artifact_bridge_hash": "32a8f6e5a054c4ae711662a3d11d8a5b547c292c3ccd2a277fc19734b249ab09",
+              "artifact_continuation_act_hash": "8d734fa94ba19405b2e3904210b05d3726da7097b9075d10a8e596f93ed6c5d1",
+              "artifact_cross_binding_hash": "d712258e59df90e22db0662f8952293d0a25a34d4d58950bf2dba98cde6be46c",
+              "artifact_executable_act_hash": "fe113abf469b71f57f2dd201e2cdfaf10b9ad59c558b765780760f01903cc022",
+              "artifact_id": "artifact-001",
+              "artifact_payload_hash": "08edc9d84bdc986f5ed61c0da7e6026394df3598671768ee26294145f91f76cc",
+              "artifact_signature": "7b002852aacad198f35683d1cfc3d31cbe74ee0b73c55f33c4a2f965c6caa673",
+              "artifact_witness_hash": "2d140aa07f47329c5a18518bc6db6091c9458429becf215ea31302e0b01bec19",
+              "branch_derivation": "DERIVATIVE",
+              "branch_role": "EXECUTION_BOUNDARY_STEWARD",
+              "branch_witness_hash": "227e7a3e0f297cc4e00305e3e2a0c7ba28e3963dad1788c056dde785f278e772",
+              "continuity_chain_head": null,
+              "continuity_mode": "self",
+              "continuity_witness_hash": "9b837f6ae46d0a8de8092d67fd178b250c26d750f699342a197e5c9b9da50b66",
+              "contract_version": "sam.v13",
+              "executable_claim": "approve_order",
+              "execution_branch_id": "branch-alpha",
+              "governing_basis_hash": "cba84bdd252a646772f7dda7fb8ed29b13633349996e08d37ccaa6f9cfb64af2",
+              "governing_basis_id": "tmu-demo-basis",
+              "governing_basis_lineage_hash": "7178f12de027d4fdeffc588168f940bfa043a04faf915eeb825a3b3f1b6062ac",
+              "governing_basis_version": "1.0.0",
+              "logic_version": "demo.logic.v1",
+              "parent_receipt_id": null,
+              "parent_receipt_witness_hash": null,
+              "receipt_kind": "continuation_judgment_receipt",
+              "source_intent": "approve order under TMU boundary demo",
+              "state_current_status": "PENDING",
+              "state_entity_id": "entity-001",
+              "state_hash": "afeb2a9ce1e28cd40d35efe22f2b0a000d532bb24e5c66b143ab7b598c3bed34",
+              "state_open_burden_codes": [],
+              "state_ref": "state-001",
+              "translation_digest": "digest-001",
+              "translation_outcome": "PRESERVE",
+              "translation_witness_hash": "75e38c17f16d3fd87eb04edc4d0a70649c3acefdf4611125a9273129ca487a0e"
+            },
+            "outcome_judgment": {
+              "admissibility_result": "ALLOW",
+              "burden_result": "NONE",
+              "escalation_target": null,
+              "judgment_mode": "SAFE_COMMIT",
+              "outcome": "SAFE_COMMIT",
+              "outcome_witness_hash": "dafc87edbc1969789ca2ce8393c19680e8a05a27742d70fb5e1029a7eb42150c",
+              "preserved_transition": "approve_order",
+              "reason_codes": [
+                "LAWFUL_COMMIT_AUTHORIZED"
+              ]
+            },
+            "preservation_record": {
+              "blocked_transition": "approve_order",
+              "continuation_disposition": "CONTINUATION_CLEAR",
+              "preservation_actions": [],
+              "preservation_reason": "LAWFUL_COMMIT_AUTHORIZED",
+              "preservation_reason_codes": [
+                "LAWFUL_COMMIT_AUTHORIZED"
+              ],
+              "preservation_result": "PASS_THROUGH",
+              "preservation_witness_hash": "497de16922750e7920c2fce380ab5de51c916dd40c44fafbce90b273fe1120a5",
+              "preserved_basis_hash": "cba84bdd252a646772f7dda7fb8ed29b13633349996e08d37ccaa6f9cfb64af2",
+              "preserved_branch_id": "branch-alpha",
+              "preserved_continuation_corridor": null,
+              "preserved_debt_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "preserved_manifold": "commit_boundary_manifold",
+              "preserved_state_hash": "afeb2a9ce1e28cd40d35efe22f2b0a000d532bb24e5c66b143ab7b598c3bed34",
+              "preserved_transition": "approve_order",
+              "prevented_branch_drift": false,
+              "redirect_open": false,
+              "refusal_preserves_manifold": false,
+              "self_continuation_terminated": false
+            },
+            "standing_judgment": {
+              "authority_scope_used": [
+                "commit_scope"
+              ],
+              "standing_after": "VALID",
+              "standing_before": "PENDING",
+              "standing_change_reason": null,
+              "standing_narrowed_by": [],
+              "standing_result": "VALID",
+              "standing_witness_hash": "4646c577fabdd3edeff8e5c29ee54e4cbe112fd413cff43a876f5b3183bb0de5"
+            }
+          },
+          "proof": {
+            "continuation_judgment": {
+              "section": "continuation_judgment",
+              "section_hash": "f4e9db67cd3b98c6f835c65536ca2d2e7e80ac86a025a75bfcc0f362829a6121",
+              "section_signature": "6a2c447ad177dc2866df712288308637f8115f5bc275c96d0474965d4313a988"
+            },
+            "continuation_preservation_binding_hash": "5b83c4ed43d2fb5d8bf771bc5fbecc023da6470258eac022db89581f87cd0d3e",
+            "judgment_act_hash": "7e7da0bea62692aac6848103448053af61a3a78db7f6d3dbf445a9befdd116a7",
+            "judgment_against_boundary_hash": "175a4ed195a0048cde767122a56df0502142d9bd4bb454692663f1a645d7fb9d",
+            "judgment_context": {
+              "section": "judgment_context",
+              "section_hash": "8d3030983081e41d6539fee28df2df138f5ebf43d2b9c0203c1f3f6608eb47ee",
+              "section_signature": "e0eb9c6a7bd616ce9204650c020fa19edfdb6321304220849cb731bedfbbb753"
+            },
+            "judgment_cross_binding_hash": "357999df5d96b4ace6928008393a9ce471fc05ba311377e8e8c006421967cf63",
+            "judgment_surface_hash": "5e79617fd816b5fc1dee2ae425398c744b6008829e1e4634e881a36a756c25f8",
+            "judgment_witness_hash": "4a035e0b511e4cf0f3e13f41285b6fde37c469a66c0566c6f03f25c5e925a069",
+            "lawful_context_proof": "de361391f0b8733bdc79d801b994090d2c2a19e1611fa45c144dd514dc2b4365",
+            "outcome_judgment": {
+              "section": "outcome_judgment",
+              "section_hash": "1b42a2518ef49bc585b1f95ab5b402a6f017365f1972c4ca8dd41477a869af85",
+              "section_signature": "93d8f284907f3a3feef9589252f94279ed4bb2a3c0db0b6e10ee65474ecc7efb"
+            },
+            "preservation_record": {
+              "section": "preservation_record",
+              "section_hash": "3cd434e9bdc33e14d80a7a906b5a8a34452a597390bbbff24919496fb26c7173",
+              "section_signature": "9481278d14c21f1c05515eeeef30c1e7844755eb661ac1aae5b60cbfb15679d1"
+            },
+            "proof_surface_hash": "69c1cc8561e18b3f07a9d756085447475a543deb687b2a22881de2dc42b40f0e",
+            "receipt_binding_hash": "7d39a916b4bbdc06c6c94d7fcaedba7b43fae5125be62bd80e1696132876c6a7",
+            "receipt_hash": "5086cda90b5a125e7fcd73d0709a4264f873967dd91b0d6869d0fac4ec1ff7d4",
+            "receipt_signature": "c5774cce2b5aed00017847b0b30678f227ff0c23c0f4a5a2bce7cf1259f41edf",
+            "standing_judgment": {
+              "section": "standing_judgment",
+              "section_hash": "bddaea79b8ff0e089eec320379a0ce3c2b3247072d98d7ca42a8f6e28f05a91e",
+              "section_signature": "3c1be2d2d9c2669a852526aa1b1fbd4585e3775e769963923e358a007813cf80"
+            }
+          },
+          "receipt_id": "9f7392f9-e5c2-441f-9ea9-f96c2f9685b3"
+        },
+        "matches": true,
+        "mismatches": [],
+        "stored": {
+          "artifact_id": "artifact-001",
+          "created_at": "2026-04-20T17:56:52+00:00",
+          "judgment": {
+            "continuation_judgment": {
+              "carry_directive": "CONTINUE_SELF",
+              "carry_forward_hash": "30548fcc29c927953dea59723cf8033f0e82d313d7d21d990cc7c508b94b0d3b",
+              "carry_reason_codes": [
+                "LAWFUL_COMMIT_AUTHORIZED"
+              ],
+              "continuation_constraints": [
+                "no_open_debt"
+              ],
+              "continuation_corridor": null,
+              "continuation_intent": "continue current lawful branch",
+              "continuation_result": "ALLOW",
+              "continuation_witness_hash": "ec77abdb9b07c1e626b0a46df7d8f12484713c8f84b4136b377bf09da195ce24",
+              "continuity_debt_in": [],
+              "continuity_debt_out": [],
+              "continuity_mode": "self",
+              "debt_action": "UNCHANGED",
+              "expected_continuation_result": "ALLOW",
+              "inherited_continuity_condition": "clear",
+              "next_required_witnesses": [],
+              "parent_branch_id": null,
+              "parent_continuity_verified": true,
+              "parent_receipt_witness_hash": null,
+              "self_continuation_lawful": true
+            },
+            "judgment_context": {
+              "artifact_boundary_act_hash": "4c3c238eba8312b4ef9ea7e208d2c50335d7a674858860d400c05116f4f1380a",
+              "artifact_boundary_claim_hash": "a600d79151d63bdbcdf359139e306bee34af5ada9d38b2e62cfb0ac4fff0417d",
+              "artifact_bridge_hash": "32a8f6e5a054c4ae711662a3d11d8a5b547c292c3ccd2a277fc19734b249ab09",
+              "artifact_continuation_act_hash": "8d734fa94ba19405b2e3904210b05d3726da7097b9075d10a8e596f93ed6c5d1",
+              "artifact_cross_binding_hash": "d712258e59df90e22db0662f8952293d0a25a34d4d58950bf2dba98cde6be46c",
+              "artifact_executable_act_hash": "fe113abf469b71f57f2dd201e2cdfaf10b9ad59c558b765780760f01903cc022",
+              "artifact_id": "artifact-001",
+              "artifact_payload_hash": "08edc9d84bdc986f5ed61c0da7e6026394df3598671768ee26294145f91f76cc",
+              "artifact_signature": "7b002852aacad198f35683d1cfc3d31cbe74ee0b73c55f33c4a2f965c6caa673",
+              "artifact_witness_hash": "2d140aa07f47329c5a18518bc6db6091c9458429becf215ea31302e0b01bec19",
+              "branch_derivation": "DERIVATIVE",
+              "branch_role": "EXECUTION_BOUNDARY_STEWARD",
+              "branch_witness_hash": "227e7a3e0f297cc4e00305e3e2a0c7ba28e3963dad1788c056dde785f278e772",
+              "continuity_chain_head": null,
+              "continuity_mode": "self",
+              "continuity_witness_hash": "9b837f6ae46d0a8de8092d67fd178b250c26d750f699342a197e5c9b9da50b66",
+              "contract_version": "sam.v13",
+              "executable_claim": "approve_order",
+              "execution_branch_id": "branch-alpha",
+              "governing_basis_hash": "cba84bdd252a646772f7dda7fb8ed29b13633349996e08d37ccaa6f9cfb64af2",
+              "governing_basis_id": "tmu-demo-basis",
+              "governing_basis_lineage_hash": "7178f12de027d4fdeffc588168f940bfa043a04faf915eeb825a3b3f1b6062ac",
+              "governing_basis_version": "1.0.0",
+              "logic_version": "demo.logic.v1",
+              "parent_receipt_id": null,
+              "parent_receipt_witness_hash": null,
+              "receipt_kind": "continuation_judgment_receipt",
+              "source_intent": "approve order under TMU boundary demo",
+              "state_current_status": "PENDING",
+              "state_entity_id": "entity-001",
+              "state_hash": "afeb2a9ce1e28cd40d35efe22f2b0a000d532bb24e5c66b143ab7b598c3bed34",
+              "state_open_burden_codes": [],
+              "state_ref": "state-001",
+              "translation_digest": "digest-001",
+              "translation_outcome": "PRESERVE",
+              "translation_witness_hash": "75e38c17f16d3fd87eb04edc4d0a70649c3acefdf4611125a9273129ca487a0e"
+            },
+            "outcome_judgment": {
+              "admissibility_result": "ALLOW",
+              "burden_result": "NONE",
+              "escalation_target": null,
+              "judgment_mode": "SAFE_COMMIT",
+              "outcome": "SAFE_COMMIT",
+              "outcome_witness_hash": "dafc87edbc1969789ca2ce8393c19680e8a05a27742d70fb5e1029a7eb42150c",
+              "preserved_transition": "approve_order",
+              "reason_codes": [
+                "LAWFUL_COMMIT_AUTHORIZED"
+              ]
+            },
+            "preservation_record": {
+              "blocked_transition": "approve_order",
+              "continuation_disposition": "CONTINUATION_CLEAR",
+              "preservation_actions": [],
+              "preservation_reason": "LAWFUL_COMMIT_AUTHORIZED",
+              "preservation_reason_codes": [
+                "LAWFUL_COMMIT_AUTHORIZED"
+              ],
+              "preservation_result": "PASS_THROUGH",
+              "preservation_witness_hash": "497de16922750e7920c2fce380ab5de51c916dd40c44fafbce90b273fe1120a5",
+              "preserved_basis_hash": "cba84bdd252a646772f7dda7fb8ed29b13633349996e08d37ccaa6f9cfb64af2",
+              "preserved_branch_id": "branch-alpha",
+              "preserved_continuation_corridor": null,
+              "preserved_debt_hash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+              "preserved_manifold": "commit_boundary_manifold",
+              "preserved_state_hash": "afeb2a9ce1e28cd40d35efe22f2b0a000d532bb24e5c66b143ab7b598c3bed34",
+              "preserved_transition": "approve_order",
+              "prevented_branch_drift": false,
+              "redirect_open": false,
+              "refusal_preserves_manifold": false,
+              "self_continuation_terminated": false
+            },
+            "standing_judgment": {
+              "authority_scope_used": [
+                "commit_scope"
+              ],
+              "standing_after": "VALID",
+              "standing_before": "PENDING",
+              "standing_change_reason": null,
+              "standing_narrowed_by": [],
+              "standing_result": "VALID",
+              "standing_witness_hash": "4646c577fabdd3edeff8e5c29ee54e4cbe112fd413cff43a876f5b3183bb0de5"
+            }
+          },
+          "proof": {
+            "continuation_judgment": {
+              "section": "continuation_judgment",
+              "section_hash": "f4e9db67cd3b98c6f835c65536ca2d2e7e80ac86a025a75bfcc0f362829a6121",
+              "section_signature": "6a2c447ad177dc2866df712288308637f8115f5bc275c96d0474965d4313a988"
+            },
+            "continuation_preservation_binding_hash": "5b83c4ed43d2fb5d8bf771bc5fbecc023da6470258eac022db89581f87cd0d3e",
+            "judgment_act_hash": "7e7da0bea62692aac6848103448053af61a3a78db7f6d3dbf445a9befdd116a7",
+            "judgment_against_boundary_hash": "175a4ed195a0048cde767122a56df0502142d9bd4bb454692663f1a645d7fb9d",
+            "judgment_context": {
+              "section": "judgment_context",
+              "section_hash": "8d3030983081e41d6539fee28df2df138f5ebf43d2b9c0203c1f3f6608eb47ee",
+              "section_signature": "e0eb9c6a7bd616ce9204650c020fa19edfdb6321304220849cb731bedfbbb753"
+            },
+            "judgment_cross_binding_hash": "357999df5d96b4ace6928008393a9ce471fc05ba311377e8e8c006421967cf63",
+            "judgment_surface_hash": "5e79617fd816b5fc1dee2ae425398c744b6008829e1e4634e881a36a756c25f8",
+            "judgment_witness_hash": "4a035e0b511e4cf0f3e13f41285b6fde37c469a66c0566c6f03f25c5e925a069",
+            "lawful_context_proof": "de361391f0b8733bdc79d801b994090d2c2a19e1611fa45c144dd514dc2b4365",
+            "outcome_judgment": {
+              "section": "outcome_judgment",
+              "section_hash": "1b42a2518ef49bc585b1f95ab5b402a6f017365f1972c4ca8dd41477a869af85",
+              "section_signature": "93d8f284907f3a3feef9589252f94279ed4bb2a3c0db0b6e10ee65474ecc7efb"
+            },
+            "preservation_record": {
+              "section": "preservation_record",
+              "section_hash": "3cd434e9bdc33e14d80a7a906b5a8a34452a597390bbbff24919496fb26c7173",
+              "section_signature": "9481278d14c21f1c05515eeeef30c1e7844755eb661ac1aae5b60cbfb15679d1"
+            },
+            "proof_surface_hash": "f41948313bcce1d51ae67ccf2232d1c9975a68e5c29235e004450f7364f87539",
+            "receipt_binding_hash": "a2330401e2903bf57adc401f2bce01cedcdb1d1a708af5adbb33d36e61efad43",
+            "receipt_hash": "a9591f1907fcbeb3aec7a40fce3d964663666dccaaf608e9de04de4b3dbe74fb",
+            "receipt_signature": "566b2a48a2dc73e03441b1a4c781b61c358c8c1862c5ad310bde7f240aedfe80",
+            "standing_judgment": {
+              "section": "standing_judgment",
+              "section_hash": "bddaea79b8ff0e089eec320379a0ce3c2b3247072d98d7ca42a8f6e28f05a91e",
+              "section_signature": "3c1be2d2d9c2669a852526aa1b1fbd4585e3775e769963923e358a007813cf80"
+            }
+          },
+          "receipt_id": "e4cde021-d5d2-4174-89d6-ac13b1bb2e83"
+        }
+      }
+    }
+  },
+  "stress": {
+    "all_positive_replays_match": true,
+    "deterministic": true,
+    "iterations": 5,
+    "receipt_identity_varies_per_run": true,
+    "unique_judgment_against_boundary_hash_count": 1,
+    "unique_judgment_against_boundary_hashes": [
+      "175a4ed195a0048cde767122a56df0502142d9bd4bb454692663f1a645d7fb9d"
+    ],
+    "unique_judgment_cross_binding_hash_count": 1,
+    "unique_judgment_cross_binding_hashes": [
+      "357999df5d96b4ace6928008393a9ce471fc05ba311377e8e8c006421967cf63"
+    ],
+    "unique_outcomes": [
+      "SAFE_COMMIT"
+    ],
+    "unique_receipt_hash_count": 5,
+    "unique_receipt_hashes": [
+      "527fb50c95fd36347694c0ed5853f2d5221448563ede79454fcc35b1b96b295b",
+      "64b5ee4868aa99e1f8e2a382ba2fb0c5df19335a796c2348780dcd0eeba55e28",
+      "9162bb34a7cf24c1ff45552b45d5bcd47843e6351af765edf8ebd592d6c507c9",
+      "c936be38c6aa4c5ad1ac1029c55d1a229b12f3c50a2e0bf14f30e056cf03bcae",
+      "d5a49a1fae7ea4b1f774b9367e77203d1c6df2c975b4105f71b89224e660e23d"
+    ]
+  }
+}
