@@ -200,7 +200,7 @@ def print_human_summary(report, stress_iterations):
     positive = report["proof"]["positive"]
     negative = report["proof"]["negative"]
 
-    print("\nPositive case")
+    print("Positive case")
     print(f"Allowed: {positive['allowed']}")
     print(f"Outcome: {positive['outcome']}")
     print(f"Judgment mode: {positive['judgment_mode']}")
@@ -210,7 +210,7 @@ def print_human_summary(report, stress_iterations):
     print(f"Replay Match: {positive['replay']['matches']}")
     print(f"Replay Mismatches: {positive['replay']['mismatches']}")
 
-    print("\nNegative case (wrong branch id)")
+    print("Negative case (wrong branch id)")
     print(f"Mutation: {negative['mutation']}")
     print(f"Replay Match: {negative['replay']['matches']}")
     print(f"Replay Mismatches: {negative['replay']['mismatches']}")
